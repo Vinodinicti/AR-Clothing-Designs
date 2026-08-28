@@ -1614,6 +1614,202 @@ function attachCardEventListeners(root = document) {
             }
         });
     });
+
+    // Bind full card click to open Product Details Modal
+    root.querySelectorAll(".collection-card, .product-card, .design-card").forEach(card => {
+        if (card.hasAttribute("data-click-bound")) return;
+        card.setAttribute("data-click-bound", "true");
+        card.style.cursor = "pointer";
+
+        card.addEventListener("click", (e) => {
+            if (e.target.closest(".btn-card-cart, .btn-card-buy, .wishlist-btn-card, .add-cart-btn, .buy-now-btn, button, a")) return;
+            const id = card.getAttribute("data-id") || getNearestProductId(card);
+            if (id) {
+                openProductModal(id);
+            }
+        });
+    });
+}
+
+/* =========================================================
+   PRODUCT DETAILS QUICK VIEW POPUP MODAL ENGINE
+========================================================= */
+function openProductModal(productId) {
+    const product = PRODUCTS_DATA.find(p => p.id === productId);
+    if (!product) return;
+
+    let modal = document.getElementById("productDetailModal");
+    if (!modal) {
+        const modalHTML = `
+            <div id="productDetailModal" class="product-detail-modal" aria-hidden="true">
+                <div class="modal-overlay" onclick="closeProductModal()"></div>
+                <div class="modal-dialog product-modal-dialog">
+                    <button type="button" class="product-modal-close" onclick="closeProductModal()" aria-label="Close">&times;</button>
+                    <div id="productModalContent" class="product-modal-content"></div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML("beforeend", modalHTML);
+        modal = document.getElementById("productDetailModal");
+    }
+
+    const contentEl = document.getElementById("productModalContent");
+    if (!contentEl) return;
+
+    const sizesHTML = (product.sizes || ["S", "M", "L", "XL"]).map((sz, idx) => `
+        <button type="button" class="modal-size-btn ${idx === 1 ? 'active' : ''}" data-size="${sz}" onclick="selectModalSize(this)">
+            ${sz}
+        </button>
+    `).join("");
+
+    const isWishlisted = wishlist.includes(product.id);
+    const originalPrice = Math.round(product.price * 1.25);
+
+    contentEl.innerHTML = `
+        <div class="product-modal-grid">
+            <!-- Left Image Showcase -->
+            <div class="product-modal-gallery">
+                <div class="product-modal-img-wrapper">
+                    <img src="${product.image}" alt="${product.name}" id="modalMainImage">
+                    ${product.tag ? `<span class="product-modal-tag">${product.tag}</span>` : ''}
+                </div>
+                <div class="product-modal-benefits">
+                    <div class="modal-benefit-pill">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        GST Verified Invoice
+                    </div>
+                    <div class="modal-benefit-pill">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Quality Checked & Export Standard
+                    </div>
+                    <div class="modal-benefit-pill">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        Custom Sizing Available
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Details Section -->
+            <div class="product-modal-details">
+                <div class="modal-meta-top">
+                    <span class="modal-category-label">${product.categoryLabel || "Collection"}</span>
+                    <span class="modal-stock-status">● In Stock • Ready for Delivery</span>
+                </div>
+
+                <h2 class="modal-product-title">${product.name}</h2>
+
+                <div class="modal-price-row">
+                    <span class="modal-current-price">₹${product.price.toLocaleString('en-IN')}</span>
+                    <span class="modal-slashed-price">₹${originalPrice.toLocaleString('en-IN')}</span>
+                    <span class="modal-save-tag">20% OFF</span>
+                </div>
+
+                <div class="modal-description">
+                    <p>${product.description || 'Crafted with premium materials, fine stitching, and attention to detail. Designed for comfort, elegant drape, and long-lasting durability.'}</p>
+                </div>
+
+                <div class="modal-option-group">
+                    <div class="modal-option-label">
+                        <span>Select Size</span>
+                        <span class="size-guide-trigger" onclick="showToast('Standard Size Chart: S (36), M (38), L (40), XL (42), XXL (44)')">Size Guide 📏</span>
+                    </div>
+                    <div class="modal-sizes-row">
+                        ${sizesHTML}
+                    </div>
+                </div>
+
+                <div class="modal-option-group">
+                    <div class="modal-option-label">
+                        <span>Quantity</span>
+                    </div>
+                    <div class="modal-qty-counter">
+                        <button type="button" class="qty-btn" onclick="updateModalQty(-1)">-</button>
+                        <input type="number" id="modalQtyInput" value="1" min="1" max="99" readonly>
+                        <button type="button" class="qty-btn" onclick="updateModalQty(1)">+</button>
+                    </div>
+                </div>
+
+                <div class="modal-actions-grid">
+                    <button type="button" class="modal-add-cart-btn" onclick="submitModalAddToCart('${product.id}')">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        ADD TO CART
+                    </button>
+
+                    <button type="button" class="modal-buy-now-btn" onclick="submitModalBuyNow('${product.id}')">
+                        BUY NOW
+                    </button>
+
+                    <button type="button" class="modal-wishlist-btn ${isWishlisted ? 'active' : ''}" onclick="toggleWishlist('${product.id}'); this.classList.toggle('active');" title="Wishlist">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    </button>
+                </div>
+
+                <div class="modal-whatsapp-enquiry">
+                    <a href="https://wa.me/919876543210?text=Hi%20AR%20Clothing%2C%20I%20am%20interested%20in%20${encodeURIComponent(product.name)}%20(₹${product.price})" target="_blank" class="modal-whatsapp-btn">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                        Ask Design Team via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+}
+
+function closeProductModal() {
+    const modal = document.getElementById("productDetailModal");
+    if (!modal) return;
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+}
+
+function selectModalSize(btn) {
+    document.querySelectorAll(".modal-size-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+}
+
+function updateModalQty(change) {
+    const input = document.getElementById("modalQtyInput");
+    if (!input) return;
+    let val = parseInt(input.value) || 1;
+    val = Math.max(1, Math.min(99, val + change));
+    input.value = val;
+}
+
+function submitModalAddToCart(productId) {
+    const activeSizeBtn = document.querySelector(".modal-size-btn.active");
+    const size = activeSizeBtn ? activeSizeBtn.getAttribute("data-size") : "M";
+    const qtyInput = document.getElementById("modalQtyInput");
+    const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : 1;
+
+    addToCart(productId, size, qty);
+    closeProductModal();
+}
+
+function submitModalBuyNow(productId) {
+    const activeSizeBtn = document.querySelector(".modal-size-btn.active");
+    const size = activeSizeBtn ? activeSizeBtn.getAttribute("data-size") : "M";
+    const qtyInput = document.getElementById("modalQtyInput");
+    const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : 1;
+
+    const product = PRODUCTS_DATA.find(p => p.id === productId);
+    if (!product) return;
+
+    closeProductModal();
+    openCheckout([{
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        category: product.categoryLabel,
+        size: size,
+        quantity: qty,
+        sizes: product.sizes
+    }]);
 }
 
 function getNearestProductId(element) {
