@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Sign in or create a customer account with AR Clothing & Designs to track custom garment orders and saved fashion concepts."
+    >
+
+    <title>Customer Login | AR Clothing & Designs</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <a href="index.html">
+                AR Clothing & Designs
+            </a>
+
+        </div>
+
+
+        <nav class="navbar">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="services.html">
+                Services
+            </a>
+
+            <a href="designs.html">
+                Designs
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="login.html" class="active">
+                Account
+            </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button class="header-action-btn search-trigger-btn" aria-label="Search clothing" title="Search">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+
+            <button class="header-action-btn wishlist-trigger-btn" aria-label="Wishlist" title="Wishlist">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="action-badge wishlist-badge">0</span>
+            </button>
+
+            <button class="header-action-btn cart-trigger-btn" aria-label="Cart" title="Cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="action-badge cart-badge">0</span>
+            </button>
+
+            <a href="login.html" class="header-action-btn account-trigger-btn active" aria-label="Customer Account" title="Account">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </a>
+
+        </div>
+
+
+        <a
+            href="contact.html#contact-form"
+            class="nav-button"
+        >
+            Enquire Now
+        </a>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             ACCOUNT HERO
+        ================================================== -->
+
+        <section class="page-hero login-hero">
+
+            <div class="page-hero-overlay"></div>
+
+            <div class="page-hero-content">
+
+                <p class="section-label">
+                    CUSTOMER PORTAL
+                </p>
+
+                <h1>
+                    Customer Account
+                </h1>
+
+                <p>
+                    Sign in to track custom manufacturing orders, saved design concepts, and personal preferences.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             AUTH CONTAINER SECTION
+        ================================================== -->
+
+        <section class="section auth-section">
+
+            <div class="auth-wrapper">
+
+
+                <!-- LEFT: FORM CARD -->
+                <div class="auth-card">
+
+                    <!-- TAB CONTROLS -->
+                    <div class="auth-tabs">
+                        <button class="auth-tab-btn active" id="tab-signin-btn" onclick="switchAuthTab('signin')">
+                            Sign In
+                        </button>
+                        <button class="auth-tab-btn" id="tab-register-btn" onclick="switchAuthTab('register')">
+                            Create Account
+                        </button>
+                    </div>
+
+
+                    <!-- SIGN IN FORM -->
+                    <form id="signin-form" class="auth-form active" onsubmit="handleCustomerLogin(event)">
+
+                        <div class="auth-header-title">
+                            <h2>Welcome Back</h2>
+                            <p>Enter your credentials to access your customer dashboard.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login-email">Email Address or Phone</label>
+                            <div class="input-with-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <input
+                                    type="email"
+                                    id="login-email"
+                                    placeholder="name@example.com"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="label-row">
+                                <label for="login-password">Password</label>
+                                <a href="#" class="forgot-password-link" onclick="handleForgotPassword(event)">Forgot password?</a>
+                            </div>
+                            <div class="input-with-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <input
+                                    type="password"
+                                    id="login-password"
+                                    placeholder="••••••••"
+                                    required
+                                >
+                                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('login-password', this)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="auth-options-row">
+                            <label class="remember-me-checkbox">
+                                <input type="checkbox" id="remember-me" checked>
+                                <span>Remember me on this device</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="auth-submit-btn">
+                            Sign In to Portal →
+                        </button>
+
+                        <div class="auth-divider">
+                            <span>or sign in with</span>
+                        </div>
+
+                        <div class="social-auth-grid">
+                            <button type="button" class="social-auth-btn" onclick="handleSocialAuth('Google')">
+                                <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.9C6.2 7.3 8.8 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/><path fill="#FBBC05" d="M5.3 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.6 7.4C.6 9.4 0 11.6 0 14s.6 4.6 1.6 6.6l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.2 0-5.8-2.3-6.7-5.3L1.6 16C3.5 19.8 7.4 23 12 23z"/></svg>
+                                Google
+                            </button>
+
+                            <button type="button" class="social-auth-btn" onclick="handleSocialAuth('Apple')">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.68c.67-.82 1.13-1.96.99-3.1-.97.04-2.18.65-2.87 1.45-.62.72-1.16 1.88-1.01 3 1.09.08 2.22-.53 2.89-1.35z"/></svg>
+                                Apple
+                            </button>
+                        </div>
+
+                    </form>
+
+
+                    <!-- CREATE ACCOUNT FORM -->
+                    <form id="register-form" class="auth-form" onsubmit="handleCustomerRegister(event)">
+
+                        <div class="auth-header-title">
+                            <h2>Create Account</h2>
+                            <p>Join AR Clothing & Designs to manage custom clothing projects.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-fullname">Full Name</label>
+                            <div class="input-with-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <input
+                                    type="text"
+                                    id="reg-fullname"
+                                    placeholder="Your Full Name"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-email">Email Address</label>
+                            <div class="input-with-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <input
+                                    type="email"
+                                    id="reg-email"
+                                    placeholder="name@example.com"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-phone">Phone Number (Optional)</label>
+                            <div class="input-with-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <input
+                                    type="tel"
+                                    id="reg-phone"
+                                    placeholder="+91 98765 43210"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-password">Password</label>
+                            <div class="input-with-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <input
+                                    type="password"
+                                    id="reg-password"
+                                    placeholder="At least 8 characters"
+                                    required
+                                >
+                                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('reg-password', this)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="auth-options-row">
+                            <label class="remember-me-checkbox">
+                                <input type="checkbox" id="terms-agree" required>
+                                <span>I agree to the <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="auth-submit-btn">
+                            Create Customer Account →
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- RIGHT: VISUAL BRAND CARD -->
+                <div class="auth-visual-card">
+
+                    <div class="visual-card-bg" style="background-image: url('images/designs/designer-1.jpg');"></div>
+                    <div class="visual-card-overlay"></div>
+
+                    <div class="visual-card-content">
+
+                        <span class="visual-badge">AR CLIENT PORTAL</span>
+
+                        <div class="visual-quote">
+                            <h3>"Crafting clothing concepts with creative precision and reliable manufacturing."</h3>
+                        </div>
+
+                        <ul class="auth-features-list">
+                            <li>
+                                <div class="check-circle">✓</div>
+                                <span>Track custom order production status</span>
+                            </li>
+                            <li>
+                                <div class="check-circle">✓</div>
+                                <span>Save & manage favorite design concepts</span>
+                            </li>
+                            <li>
+                                <div class="check-circle">✓</div>
+                                <span>Direct consultation with design team</span>
+                            </li>
+                            <li>
+                                <div class="check-circle">✓</div>
+                                <span>Exclusive access to new seasonal collections</span>
+                            </li>
+                        </ul>
+
+                        <div class="visual-footer-info">
+                            <span>AR CLOTHING & DESIGNS</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+                <h3>AR Clothing & Designs</h3>
+                <p>Creative fashion design and reliable clothing manufacturing.</p>
+                <div class="footer-badge">
+                    <span>GST Verified • Export Quality • Sampling Lab</span>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="designs.html">Designs</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html">Account</a>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><strong>Phone:</strong> +91 98765 43210</p>
+                <p><strong>Email:</strong> info@arclothing.com</p>
+                <p><strong>Location:</strong> Textile Hub, India</p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 AR Clothing & Designs. All Rights Reserved.</p>
+            <button type="button" class="footer-privacy-btn" id="openPrivacyModalBtn">
+                Privacy Policy & Terms
+            </button>
+        </div>
+
+    </footer>
+
+
+    <!-- INLINE TAB & AUTH HANDLER SCRIPT -->
+    <script>
+        function switchAuthTab(tabName) {
+            const signinBtn = document.getElementById('tab-signin-btn');
+            const registerBtn = document.getElementById('tab-register-btn');
+            const signinForm = document.getElementById('signin-form');
+            const registerForm = document.getElementById('register-form');
+
+            if (tabName === 'signin') {
+                signinBtn.classList.add('active');
+                registerBtn.classList.remove('active');
+                signinForm.classList.add('active');
+                registerForm.classList.remove('active');
+            } else {
+                registerBtn.classList.add('active');
+                signinBtn.classList.remove('active');
+                registerForm.classList.add('active');
+                signinForm.classList.remove('active');
+            }
+        }
+
+        function togglePasswordVisibility(inputId, btnElement) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btnElement.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+            } else {
+                input.type = 'password';
+                btnElement.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+            }
+        }
+
+        function handleCustomerLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            showNotification('Welcome back! Signed in successfully as ' + email);
+        }
+
+        function handleCustomerRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('reg-fullname').value;
+            showNotification('Account created successfully! Welcome to AR Clothing & Designs, ' + name);
+        }
+
+        function handleForgotPassword(event) {
+            event.preventDefault();
+            const email = prompt('Enter your registered email address to receive password reset instructions:');
+            if (email) {
+                showNotification('Password reset instructions sent to ' + email);
+            }
+        }
+
+        function handleSocialAuth(provider) {
+            showNotification('Redirecting to ' + provider + ' secure authentication...');
+        }
+
+        function showNotification(msg) {
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed; bottom:24px; right:24px; background:#0F172A; color:#FFFFFF; padding:14px 24px; border-radius:10px; border:1px solid #CBD5E1; font-family:Outfit,sans-serif; font-weight:600; font-size:0.92rem; box-shadow:0 10px 25px rgba(0,0,0,0.25); z-index:9999; animation:fadeIn 0.3s ease;';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 3500);
+        }
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
