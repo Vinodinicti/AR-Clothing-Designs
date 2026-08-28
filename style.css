@@ -4967,7 +4967,7 @@ button, input, textarea, select {
     .header {
         height: 64px;
         min-height: 64px;
-        padding: 0 16px;
+        padding: 0 12px;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
@@ -4988,13 +4988,14 @@ button, input, textarea, select {
 
     .logo {
         margin-right: 0;
-        max-width: 52%;
+        max-width: 50%;
         flex-shrink: 1;
         overflow: hidden;
     }
 
     .logo a {
-        font-size: clamp(0.98rem, 4vw, 1.22rem);
+        font-size: clamp(0.84rem, 3.8vw, 1.08rem) !important;
+        letter-spacing: -0.03em !important;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -5005,16 +5006,16 @@ button, input, textarea, select {
 
     .header-actions {
         margin: 0;
-        gap: 5px;
+        gap: 4px;
         display: flex;
         align-items: center;
         flex-shrink: 0;
     }
 
     .header-action-btn {
-        width: 35px;
-        height: 35px;
-        min-width: 35px;
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.15);
         border: 1.5px solid rgba(255, 255, 255, 0.35);
@@ -5029,8 +5030,8 @@ button, input, textarea, select {
     }
 
     .header-action-btn svg {
-        width: 17px;
-        height: 17px;
+        width: 16px;
+        height: 16px;
     }
 
     .menu-toggle,
@@ -5039,9 +5040,9 @@ button, input, textarea, select {
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 35px;
-        height: 35px;
-        min-width: 35px;
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
         background: rgba(255, 255, 255, 0.15);
         border: 1.5px solid rgba(255, 255, 255, 0.35);
         border-radius: 50%;
@@ -5057,8 +5058,8 @@ button, input, textarea, select {
     .menu-toggle svg,
     .nav-toggle svg,
     .mobile-nav-toggle svg {
-        width: 17px;
-        height: 17px;
+        width: 16px;
+        height: 16px;
     }
 
     /* Mobile Dropdown Navigation Drawer */
@@ -5103,18 +5104,75 @@ button, input, textarea, select {
         border-bottom: none;
     }
 
-    .hero {
-        min-height: 100vh;
-        padding: 170px 6% 70px;
+    /* Mobile Hero Layout: Full Uncropped Image with Both Models + Clean Responsive Typography */
+    .hero.index-hero {
+        min-height: auto !important;
+        padding: 80px 16px 40px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        background-color: var(--bg-page) !important;
+    }
+
+    .hero.index-hero::before {
+        position: relative !important;
+        width: 100% !important;
+        height: 54vw !important;
+        min-height: 200px !important;
+        max-height: 320px !important;
+        background-size: contain !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        border-radius: 14px !important;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.10) !important;
+        margin-bottom: 22px !important;
+        z-index: 1 !important;
+        inset: auto !important;
+    }
+
+    .hero.index-hero .hero-overlay {
+        display: none !important;
+    }
+
+    .hero.index-hero .hero-content {
+        position: relative !important;
+        z-index: 2 !important;
+        max-width: 100% !important;
+        text-align: center !important;
+    }
+
+    .hero.index-hero .hero-subtitle {
+        font-size: 0.78rem !important;
+        letter-spacing: 2.5px !important;
+        margin-bottom: 12px !important;
+        color: #0F172A !important;
+        justify-content: center !important;
+    }
+
+    .hero.index-hero h1 {
+        font-size: clamp(1.85rem, 7.2vw, 2.4rem) !important;
+        line-height: 1.16 !important;
+        margin-bottom: 14px !important;
+        color: #0F172A !important;
+        text-shadow: none !important;
+    }
+
+    .hero.index-hero .hero-description {
+        font-size: 0.96rem !important;
+        line-height: 1.65 !important;
+        margin-bottom: 24px !important;
+        color: var(--text-body) !important;
+        text-shadow: none !important;
+    }
+
+    .hero.index-hero .hero-buttons {
+        justify-content: center !important;
+        width: 100% !important;
     }
 
     .page-hero {
-        min-height: 48vh;
-        padding: 160px 6% 60px;
-    }
-
-    .hero h1 {
-        font-size: 2.8rem;
+        min-height: 44vh;
+        padding: 120px 20px 50px !important;
     }
 
     .section {
