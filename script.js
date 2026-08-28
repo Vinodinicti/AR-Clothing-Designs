@@ -185,19 +185,19 @@ function injectEcommerceModals() {
                 </div>
                 <button class="search-close-btn" id="searchCloseBtn" aria-label="Close search">✕</button>
             </div>
-            <div class="search-quick-tags">
-                <span class="tag-label">Category:</span>
-                <button class="search-tag active" data-query="all">All</button>
-                <button class="search-tag" data-query="women">Women</button>
-                <button class="search-tag" data-query="men">Men</button>
-                <button class="search-tag" data-query="tshirt">T-Shirts</button>
-                <button class="search-tag" data-query="shirt">Shirts</button>
-                <button class="search-tag" data-query="hoodie">Hoodies</button>
-                <button class="search-tag" data-query="dress">Dresses</button>
-                <button class="search-tag" data-query="premium">Premium</button>
-            </div>
-            <div class="search-recommendations-bar" id="searchRecommendationsBar"></div>
             <div class="search-body">
+                <div class="search-quick-tags">
+                    <span class="tag-label">Category:</span>
+                    <button class="search-tag active" data-query="all">All</button>
+                    <button class="search-tag" data-query="women">Women</button>
+                    <button class="search-tag" data-query="men">Men</button>
+                    <button class="search-tag" data-query="tshirt">T-Shirts</button>
+                    <button class="search-tag" data-query="shirt">Shirts</button>
+                    <button class="search-tag" data-query="hoodie">Hoodies</button>
+                    <button class="search-tag" data-query="dress">Dresses</button>
+                    <button class="search-tag" data-query="premium">Premium</button>
+                </div>
+                <div class="search-recommendations-bar" id="searchRecommendationsBar"></div>
                 <div class="search-results-count" id="searchResultsCount">Showing all items</div>
                 <div class="search-results-grid" id="searchResultsGrid"></div>
             </div>
