@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Explore clothing designs and collections from AR Clothing & Designs."
+    >
+
+    <title>Designs & Collections | AR Clothing & Designs</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <a href="index.html">
+                AR Clothing & Designs
+            </a>
+
+        </div>
+
+
+        <nav class="navbar">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="services.html">
+                Services
+            </a>
+
+            <a href="designs.html" class="active">
+                Designs
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button class="header-action-btn search-trigger-btn" aria-label="Search clothing" title="Search">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+
+            <button class="header-action-btn wishlist-trigger-btn" aria-label="Wishlist" title="Wishlist">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="action-badge wishlist-badge">0</span>
+            </button>
+
+            <button class="header-action-btn cart-trigger-btn" aria-label="Cart" title="Cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="action-badge cart-badge">0</span>
+            </button>
+
+        </div>
+
+
+        <a
+            href="contact.html"
+            class="nav-button"
+        >
+            Enquire Now
+        </a>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             PAGE HERO
+        ================================================== -->
+
+        <section class="page-hero designs-hero">
+
+            <div class="page-hero-overlay"></div>
+
+
+            <div class="page-hero-content">
+
+                <p class="section-label">
+                    OUR COLLECTION
+                </p>
+
+
+                <h1>
+                    Designed To<br>
+                    Make An Impression
+                </h1>
+
+
+                <p>
+
+                    Explore our clothing concepts,
+                    designs and creative collections.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             COLLECTION INTRO
+        ================================================== -->
+
+        <section class="section collection-intro">
+
+            <div class="section-title">
+
+                <p class="section-label">
+                    AR COLLECTIONS
+                </p>
+
+
+                <h2>
+                    Style With Purpose
+                </h2>
+
+
+                <p class="section-description">
+
+                    Discover carefully developed clothing
+                    concepts created with attention to
+                    design, fabric and detail.
+
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 COLLECTION FILTER TOOLBAR (AR COLLECTIONS)
+            ================================================== -->
+            <div class="collection-filter-toolbar">
+
+                <div class="collection-filters">
+                    <button class="filter-btn active" data-filter="all">All Designs</button>
+                    <button class="filter-btn" data-filter="women">Women</button>
+                    <button class="filter-btn" data-filter="men">Men</button>
+                    <button class="filter-btn" data-filter="casual">Casual</button>
+                    <button class="filter-btn" data-filter="premium">Premium</button>
+                </div>
+
+                <div class="filter-controls-right">
+                    <div class="filter-select-wrap">
+                        <label for="sortSelect">Sort By:</label>
+                        <select id="sortSelect" class="filter-select" aria-label="Sort designs">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest Arrival</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DESIGN GRID (CORRECTED PRODUCT FORMAT)
+            ================================================== -->
+
+            <div class="collection-grid">
+
+                <!-- DESIGN 01 (WOMEN) -->
+                <div class="collection-card" data-category="women" data-id="design-1">
+                    <div class="collection-image">
+                        <img src="images/designs/design-1.jpg" alt="Signature Elegance - Women's Fashion Design" loading="lazy">
+                        <span class="collection-tag">NEW RELEASE</span>
+                        <button class="wishlist-btn-card" data-id="design-1" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">WOMEN'S COLLECTION</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Signature Elegance</h3>
+                        <p class="collection-desc">A refined clothing concept designed with a contemporary silhouette and breathable drape.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹2,499</span>
+                                <span class="price-original">₹3,299</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="design-1">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="design-1">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 02 (MEN) -->
+                <div class="collection-card" data-category="men" data-id="design-2">
+                    <div class="collection-image">
+                        <img src="images/designs/design-2.jpg" alt="Modern Classic - Men's Fashion Design" loading="lazy">
+                        <span class="collection-tag">CLASSIC</span>
+                        <button class="wishlist-btn-card" data-id="design-2" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">MEN'S COLLECTION</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Modern Classic</h3>
+                        <p class="collection-desc">Clean lines and timeless styling tailored with premium fabrics for an effortless look.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                            <span class="size-pill">XXL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹2,799</span>
+                                <span class="price-original">₹3,499</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="design-2">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="design-2">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 03 (CASUAL) -->
+                <div class="collection-card" data-category="casual" data-id="design-3">
+                    <div class="collection-image">
+                        <img src="images/designs/design-3.jpg" alt="Urban Comfort - Casual Clothing Design" loading="lazy">
+                        <span class="collection-tag">TRENDING</span>
+                        <button class="wishlist-btn-card" data-id="design-3" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">CASUAL COLLECTION</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Urban Comfort</h3>
+                        <p class="collection-desc">Everyday fashion combining relaxed comfort, natural softness, and contemporary style.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹1,899</span>
+                                <span class="price-original">₹2,499</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="design-3">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="design-3">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 04 (PREMIUM) -->
+                <div class="collection-card" data-category="premium" data-id="design-4">
+                    <div class="collection-image">
+                        <img src="images/designs/design-4.jpg" alt="Noir Signature - Premium Clothing Design" loading="lazy">
+                        <span class="collection-tag">PREMIUM LUXE</span>
+                        <button class="wishlist-btn-card" data-id="design-4" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">PREMIUM COLLECTION</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Noir Signature</h3>
+                        <p class="collection-desc">A sophisticated concept focused on luxury styling, bespoke textures, and detailed finishing.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹3,499</span>
+                                <span class="price-original">₹4,499</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="design-4">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="design-4">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 05 (WOMEN / PREMIUM) -->
+                <div class="collection-card" data-category="women" data-id="design-5">
+                    <div class="collection-image">
+                        <img src="images/designs/design-5.jpg" alt="Golden Line - Women's Contemporary Clothing" loading="lazy">
+                        <span class="collection-tag">FEATURED</span>
+                        <button class="wishlist-btn-card" data-id="design-5" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">WOMEN'S COLLECTION</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Golden Line</h3>
+                        <p class="collection-desc">Elegant styling with carefully considered details, tailored drape, and premium visual appeal.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹2,999</span>
+                                <span class="price-original">₹3,799</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="design-5">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="design-5">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 06 (MEN / PREMIUM) -->
+                <div class="collection-card" data-category="men" data-id="design-6">
+                    <div class="collection-image">
+                        <img src="images/designs/design-6.jpg" alt="Executive Form - Men's Premium Clothing" loading="lazy">
+                        <span class="collection-tag">POPULAR</span>
+                        <button class="wishlist-btn-card" data-id="design-6" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">MEN'S COLLECTION</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Executive Form</h3>
+                        <p class="collection-desc">Structured fashion designed for a confident, high-profile, and refined appearance.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                            <span class="size-pill">XXL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹3,299</span>
+                                <span class="price-original">₹3,999</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="design-6">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="design-6">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 07 (CASUAL / ALL) -->
+                <div class="collection-card" data-category="casual" data-id="col-1">
+                    <div class="collection-image">
+                        <img src="images/designs/design-3.jpg" alt="Classic Premium T-Shirt" loading="lazy">
+                        <span class="collection-tag">BESTSELLER</span>
+                        <button class="wishlist-btn-card" data-id="col-1" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">CASUAL WEAR</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Classic Premium T-Shirt</h3>
+                        <p class="collection-desc">Ultra-soft 100% combed organic cotton with reinforced stitching and breathable fit.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹999</span>
+                                <span class="price-original">₹1,399</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="col-1">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="col-1">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 08 (MEN / CASUAL) -->
+                <div class="collection-card" data-category="men" data-id="col-2">
+                    <div class="collection-image">
+                        <img src="images/designs/design-2.jpg" alt="Premium Casual Shirt" loading="lazy">
+                        <span class="collection-tag">TAILORED</span>
+                        <button class="wishlist-btn-card" data-id="col-2" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">MEN'S SHIRTS</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Premium Casual Shirt</h3>
+                        <p class="collection-desc">Contemporary styling with rich woven texture, structured collar, and versatile wear.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹1,499</span>
+                                <span class="price-original">₹1,999</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="col-2">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="col-2">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 09 (CASUAL / PREMIUM) -->
+                <div class="collection-card" data-category="casual" data-id="col-3">
+                    <div class="collection-image">
+                        <img src="images/designs/design-4.jpg" alt="Urban Comfort Hoodie" loading="lazy">
+                        <span class="collection-tag">POPULAR</span>
+                        <button class="wishlist-btn-card" data-id="col-3" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">HOODIES & SWEATS</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Urban Comfort Hoodie</h3>
+                        <p class="collection-desc">Heavyweight fleece pullover featuring custom ribbed cuffs and double-layered hood.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹1,299</span>
+                                <span class="price-original">₹1,799</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="col-3">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="col-3">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 10 (WOMEN / PREMIUM) -->
+                <div class="collection-card" data-category="women" data-id="col-4">
+                    <div class="collection-image">
+                        <img src="images/designs/design-1.jpg" alt="Elegant Designer Dress" loading="lazy">
+                        <span class="collection-tag">BESTSELLER</span>
+                        <button class="wishlist-btn-card" data-id="col-4" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">WOMEN'S DRESSES</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Elegant Designer Dress</h3>
+                        <p class="collection-desc">An iconic fluid silhouette created for formal evenings, gatherings, and statement events.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹1,899</span>
+                                <span class="price-original">₹2,499</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="col-4">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="col-4">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 11 (MEN / PREMIUM) -->
+                <div class="collection-card" data-category="premium" data-id="col-5">
+                    <div class="collection-image">
+                        <img src="images/designs/design-6.jpg" alt="Designer Formal Shirt" loading="lazy">
+                        <span class="collection-tag">FORMAL LUXE</span>
+                        <button class="wishlist-btn-card" data-id="col-5" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">PREMIUM COLLECTION</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Designer Formal Shirt</h3>
+                        <p class="collection-desc">Luxury Egyptian giza cotton formal shirt with an immaculate stitch count and satin finish.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                            <span class="size-pill">XXL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹1,599</span>
+                                <span class="price-original">₹2,199</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="col-5">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="col-5">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN 12 (CASUAL / WOMEN) -->
+                <div class="collection-card" data-category="casual" data-id="col-6">
+                    <div class="collection-image">
+                        <img src="images/designs/design-5.jpg" alt="Signature AR T-Shirt" loading="lazy">
+                        <span class="collection-tag">EXCLUSIVE</span>
+                        <button class="wishlist-btn-card" data-id="col-6" aria-label="Add to Wishlist" title="Add to Wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
+                    <div class="collection-info">
+                        <div class="card-meta-top">
+                            <span class="design-category">CASUAL WEAR</span>
+                            <span class="stock-status in-stock">● In Stock</span>
+                        </div>
+                        <h3 class="product-title">Signature AR T-Shirt</h3>
+                        <p class="collection-desc">Designed with minimalist styling, premium drop-shoulder cut, and subtle tonal branding.</p>
+                        <div class="card-sizes-row">
+                            <span class="size-label">Sizes:</span>
+                            <span class="size-pill">S</span>
+                            <span class="size-pill">M</span>
+                            <span class="size-pill">L</span>
+                            <span class="size-pill">XL</span>
+                        </div>
+                        <div class="collection-bottom">
+                            <div class="price-box">
+                                <span class="collection-price">₹1,099</span>
+                                <span class="price-original">₹1,499</span>
+                            </div>
+                            <div class="card-actions-row">
+                                <button class="btn-card-cart add-cart-btn" data-id="col-6">Add to Cart</button>
+                                <button class="btn-card-buy buy-now-btn" data-id="col-6">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             AI DESIGN GENERATOR
+        ================================================== -->
+
+        <section class="ai-design-section">
+
+
+            <div class="ai-design-content">
+
+
+                <div class="ai-badge">
+                    AI POWERED
+                </div>
+
+
+                <h2>
+                    Imagine It.<br>
+                    <span>Design It.</span>
+                </h2>
+
+
+                <p>
+
+                    Turn your clothing ideas into
+                    creative design concepts with our
+                    upcoming AI Design Generator.
+
+                </p>
+
+
+                <p>
+
+                    Describe a style, garment or concept
+                    and explore new design possibilities
+                    powered by artificial intelligence.
+
+                </p>
+
+
+                <button
+                    class="btn primary-btn ai-coming-btn"
+                    type="button"
+                >
+                    AI Design Generator
+                </button>
+
+
+                <small>
+                    Feature currently under development
+                </small>
+
+            </div>
+
+
+            <div class="ai-design-visual">
+
+                <div class="ai-circle">
+
+                    <span>
+                        AI
+                    </span>
+
+                </div>
+
+
+                <div class="ai-orbit orbit-one"></div>
+
+                <div class="ai-orbit orbit-two"></div>
+
+                <div class="ai-orbit orbit-three"></div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             GALLERY
+        ================================================== -->
+
+        <section class="section designs-gallery">
+
+            <div class="section-title">
+
+                <p class="section-label">
+                    DESIGN GALLERY
+                </p>
+
+
+                <h2>
+                    A Glimpse Into Our Work
+                </h2>
+
+
+                <p class="section-description">
+
+                    A collection of ideas, textures,
+                    silhouettes and fashion inspiration.
+
+                </p>
+
+            </div>
+
+
+            <div class="design-gallery-grid">
+
+
+                <div class="design-gallery-item large">
+
+                    <img
+                        src="images/gallery/gallery-1.jpg"
+                        alt="Fashion design gallery"
+                    >
+
+                </div>
+
+
+                <div class="design-gallery-item">
+
+                    <img
+                        src="images/gallery/gallery-2.jpg"
+                        alt="Clothing design detail"
+                    >
+
+                </div>
+
+
+                <div class="design-gallery-item">
+
+                    <img
+                        src="images/gallery/gallery-3.jpg"
+                        alt="Garment manufacturing"
+                    >
+
+                </div>
+
+
+                <div class="design-gallery-item">
+
+                    <img
+                        src="images/gallery/gallery-4.jpg"
+                        alt="Fashion fabric and clothing"
+                    >
+
+                </div>
+
+
+                <div class="design-gallery-item">
+
+                    <img
+                        src="images/gallery/gallery-5.jpg"
+                        alt="Fashion collection"
+                    >
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CUSTOM DESIGN CTA
+        ================================================== -->
+
+        <section class="about-cta designs-cta">
+
+            <div class="about-cta-content">
+
+                <p class="section-label">
+                    HAVE AN IDEA?
+                </p>
+
+
+                <h2>
+                    Create Something Unique
+                </h2>
+
+
+                <p>
+
+                    Have a design in mind?
+                    Tell us what you are looking for
+                    and let's turn the concept into reality.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="contact.html"
+                        class="btn primary-btn"
+                    >
+                        Start Your Enquiry
+                    </a>
+
+
+                    <a
+                        href="services.html"
+                        class="btn secondary-btn"
+                    >
+                        View Manufacturing
+                    </a>
+
+                </div>
+
+            </div>
+
+        <!-- =================================================
+             CLIENT REVIEWS & TESTIMONIALS (DESIGNS PAGE)
+        ================================================== -->
+
+        <section class="section designs-reviews-section" id="reviews">
+
+            <div class="section-title">
+
+                <p class="section-label">
+                    CLIENT FEEDBACK & REVIEWS
+                </p>
+
+                <h2>
+                    What Our Clients Say
+                </h2>
+
+                <p class="section-description">
+                    Read feedback from fashion designers, boutique owners, and apparel brands who trust AR Clothing & Designs for custom design concepts and garment manufacturing.
+                </p>
+
+            </div>
+
+
+            <div class="reviews-grid">
+
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-rating"><span class="rating-badge-svg"><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> <span class="rating-score">5.0 Verified Review</span></div>
+                    <p class="review-text">"AR Clothing & Designs brought our summer collection vision to life with precision. Their sample turnaround was exceptionally fast, and the stitching quality exceeded our expectations!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">P</div>
+                        <div>
+                            <h4>Priya Mehta</h4>
+                            <p class="author-role">Founder, Atelier Luxe Boutique</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-rating"><span class="rating-badge-svg"><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> <span class="rating-score">5.0 Verified Review</span></div>
+                    <p class="review-text">"The pattern making and tech pack accuracy were outstanding. We ordered 500 units of custom streetwear hoodies, and every single piece met our strict quality control standards."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">R</div>
+                        <div>
+                            <h4>Rohan Kapoor</h4>
+                            <p class="author-role">Creative Director, Urban Form Apparel</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-rating"><span class="rating-badge-svg"><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> <span class="rating-score">5.0 Verified Review</span></div>
+                    <p class="review-text">"Seamless communication from initial sketch consultation to bulk garment delivery. Their fabric sourcing team helped us select organic cotton that our customers absolutely love!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">A</div>
+                        <div>
+                            <h4>Ananya Sen</h4>
+                            <p class="author-role">Head Designer, Veda Couture</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+                <h3>AR Clothing & Designs</h3>
+                <p>Creative fashion design and reliable clothing manufacturing.</p>
+                <div class="footer-badge">
+                    <span>GST Verified • Export Quality • Sampling Lab</span>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="designs.html">Designs</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><strong>Phone:</strong> +91 98765 43210</p>
+                <p><strong>Email:</strong> info@arclothing.com</p>
+                <p><strong>Location:</strong> Textile Hub, India</p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 AR Clothing & Designs. All Rights Reserved.</p>
+            <button type="button" class="footer-privacy-btn" id="openPrivacyModalBtn">
+                Privacy Policy & Terms
+            </button>
+        </div>
+
+    </footer>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
