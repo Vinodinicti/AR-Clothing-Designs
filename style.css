@@ -5161,15 +5161,16 @@ button, input, textarea, select {
     .hero.index-hero::before {
         position: relative !important;
         width: 100% !important;
-        height: 54vw !important;
-        min-height: 200px !important;
-        max-height: 320px !important;
-        background-size: contain !important;
-        background-position: center center !important;
+        height: 60vw !important;
+        min-height: 220px !important;
+        max-height: 350px !important;
+        background-size: cover !important;
+        background-position: center 20% !important;
         background-repeat: no-repeat !important;
-        border-radius: 14px !important;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.10) !important;
-        margin-bottom: 22px !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12) !important;
+        margin-bottom: 20px !important;
         z-index: 1 !important;
         inset: auto !important;
     }
