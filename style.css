@@ -6015,6 +6015,29 @@ button, input, textarea, select {
         box-sizing: border-box !important;
     }
 
+    .input-with-icon {
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
+    .input-with-icon > svg {
+        position: absolute !important;
+        left: 10px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 14px !important;
+        height: 14px !important;
+        pointer-events: none !important;
+        z-index: 5 !important;
+    }
+
+    .input-with-icon input {
+        padding-left: 32px !important;
+        padding-right: 32px !important;
+    }
+
     .form-group textarea {
         height: 70px !important;
         min-height: 70px !important;
@@ -6181,8 +6204,6 @@ button, input, textarea, select {
     .values-grid,
     .benefits-grid,
     .privacy-grid,
-    .reviews-grid,
-    .ai-home-grid,
     .process-container,
     .search-results-grid,
     .contact-cards-grid,
@@ -6552,20 +6573,24 @@ button, input, textarea, select {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
-.input-with-icon svg {
+.input-with-icon > svg {
     position: absolute;
-    left: 16px;
-    width: 20px;
-    height: 20px;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
     stroke: #64748B;
     pointer-events: none;
+    z-index: 5;
 }
 
 .input-with-icon input {
     width: 100%;
-    padding: 14px 16px 14px 48px;
+    padding: 12px 40px 12px 42px !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
     color: #0F172A;
@@ -6584,7 +6609,9 @@ button, input, textarea, select {
 
 .toggle-password-btn {
     position: absolute;
-    right: 14px;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
@@ -6593,6 +6620,7 @@ button, input, textarea, select {
     align-items: center;
     justify-content: center;
     color: #64748B;
+    z-index: 5;
 }
 
 .toggle-password-btn svg {
