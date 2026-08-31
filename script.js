@@ -2108,7 +2108,182 @@ function initAiHomeTrigger() {
 }
 
 /* =========================================================
-   12. INITIALIZATION ON DOM READY
+   11B. ADMIN & STAFF LOGIN SYSTEM (INTEGRATED TAB)
+========================================================= */
+function openAdminModal() {
+    if (window.location.pathname.includes("login.html")) {
+        switchAuthTab("admin");
+    } else {
+        window.location.href = "login.html#admin";
+    }
+}
+
+function handleAdminLoginSubmit(e) {
+    e.preventDefault();
+    const emailInput = document.getElementById("page-admin-email") || document.getElementById("admin-email");
+    const email = emailInput && emailInput.value ? emailInput.value : "admin@arclothing.com";
+    const roleSelect = document.getElementById("page-admin-role") || document.getElementById("admin-role");
+    const roleName = roleSelect ? roleSelect.options[roleSelect.selectedIndex].text : "Store Administrator";
+
+    showToastNotification(`Welcome Back! Authenticated as ${roleName} (${email}). Loading Dashboard...`);
+}
+
+/* Auth Tab Switcher (Sign In, Create Account, Admin Login) */
+function switchAuthTab(tab) {
+    const signinBtn = document.getElementById("tab-signin-btn");
+    const registerBtn = document.getElementById("tab-register-btn");
+    const adminBtn = document.getElementById("tab-admin-btn");
+
+    const signinForm = document.getElementById("signin-form");
+    const registerForm = document.getElementById("register-form");
+    const adminForm = document.getElementById("admin-form");
+
+    if (signinBtn) signinBtn.classList.remove("active");
+    if (registerBtn) registerBtn.classList.remove("active");
+    if (adminBtn) adminBtn.classList.remove("active");
+
+    if (signinForm) signinForm.classList.remove("active");
+    if (registerForm) registerForm.classList.remove("active");
+    if (adminForm) adminForm.classList.remove("active");
+
+    if (tab === "signin") {
+        if (signinBtn) signinBtn.classList.add("active");
+        if (signinForm) signinForm.classList.add("active");
+    } else if (tab === "register") {
+        if (registerBtn) registerBtn.classList.add("active");
+        if (registerForm) registerForm.classList.add("active");
+    } else if (tab === "admin") {
+        if (adminBtn) adminBtn.classList.add("active");
+        if (adminForm) adminForm.classList.add("active");
+    }
+}
+
+/* =========================================================
+   12. TOP HERO IMAGE SLIDER, ANIMATION & NAVIGATION SYSTEM
+========================================================= */
+const HERO_SHOWCASE_IMAGES = [
+    { url: "images/designs/hero.jpg", label: "Showroom", title: "Luxury Showcase" },
+    { url: "images/designs/design-1.jpg", label: "Executive Suits", title: "Men's Formal Line" },
+    { url: "images/designs/designer-1.jpg", label: "Design Studio", title: "Couture Atelier" },
+    { url: "images/gallery/gallery-3.jpg", label: "Manufacturing", title: "Garment Production" },
+    { url: "images/designs/design-5.jpg", label: "Evening Gowns", title: "Women's Evening" }
+];
+
+let heroCurrentIndex = 0;
+let heroAutoPlayTimer = null;
+let isHeroAutoPlaying = true;
+
+function initTopHeroImageSlider() {
+    const heroElem = document.querySelector(".hero.index-hero, .page-hero");
+    if (!heroElem) return;
+
+    // Inject Interactive Hero Image Controls Widget
+    if (!heroElem.querySelector(".hero-img-nav-wrap")) {
+        const navHTML = `
+            <div class="hero-img-nav-wrap" aria-label="Hero Image Carousel Controls">
+                <button type="button" class="hero-nav-arrow prev" title="Previous Hero Image" onclick="prevHeroImage()">‹</button>
+                <div class="hero-nav-dots" id="heroNavDots">
+                    ${HERO_SHOWCASE_IMAGES.map((img, idx) => `
+                        <button type="button" class="hero-dot ${idx === 0 ? 'active' : ''}" title="${img.label}" onclick="setHeroImage(${idx})"></button>
+                    `).join('')}
+                </div>
+                <button type="button" class="hero-nav-arrow next" title="Next Hero Image" onclick="nextHeroImage()">›</button>
+                <button type="button" class="hero-play-pause-btn" id="heroPlayPauseBtn" title="Pause Hero Slideshow" onclick="toggleHeroPlayPause()">
+                    <svg class="pause-icon" viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="5" y="4" width="4" height="16" rx="1"/><rect x="15" y="4" width="4" height="16" rx="1"/></svg>
+                    <svg class="play-icon" viewBox="0 0 24 24" width="12" height="12" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+            </div>
+        `;
+        heroElem.appendChild(document.createRange().createContextualFragment(navHTML));
+    }
+
+    startHeroAutoPlay();
+}
+
+function updateHeroDisplay(index) {
+    const heroElem = document.querySelector(".hero.index-hero, .page-hero");
+    if (!heroElem) return;
+
+    heroCurrentIndex = (index + HERO_SHOWCASE_IMAGES.length) % HERO_SHOWCASE_IMAGES.length;
+    const imgData = HERO_SHOWCASE_IMAGES[heroCurrentIndex];
+
+    let styleTag = document.getElementById("dynamicHeroStyle");
+    if (!styleTag) {
+        styleTag = document.createElement("style");
+        styleTag.id = "dynamicHeroStyle";
+        document.head.appendChild(styleTag);
+    }
+
+    styleTag.innerHTML = `
+        .hero.index-hero::before,
+        .page-hero::before {
+            background-image: url("${imgData.url}") !important;
+            transition: background-image 0.8s ease-in-out !important;
+        }
+    `;
+
+    const dots = document.querySelectorAll("#heroNavDots .hero-dot");
+    dots.forEach((dot, idx) => {
+        if (idx === heroCurrentIndex) {
+            dot.classList.add("active");
+        } else {
+            dot.classList.remove("active");
+        }
+    });
+}
+
+function setHeroImage(index) {
+    updateHeroDisplay(index);
+    restartHeroAutoPlay();
+}
+
+function nextHeroImage() {
+    updateHeroDisplay(heroCurrentIndex + 1);
+    restartHeroAutoPlay();
+}
+
+function prevHeroImage() {
+    updateHeroDisplay(heroCurrentIndex - 1);
+    restartHeroAutoPlay();
+}
+
+function startHeroAutoPlay() {
+    if (heroAutoPlayTimer) clearInterval(heroAutoPlayTimer);
+    if (isHeroAutoPlaying) {
+        heroAutoPlayTimer = setInterval(() => {
+            updateHeroDisplay(heroCurrentIndex + 1);
+        }, 5500);
+    }
+}
+
+function restartHeroAutoPlay() {
+    if (isHeroAutoPlaying) {
+        startHeroAutoPlay();
+    }
+}
+
+function toggleHeroPlayPause() {
+    isHeroAutoPlaying = !isHeroAutoPlaying;
+    const btn = document.getElementById("heroPlayPauseBtn");
+    if (btn) {
+        const pauseIcon = btn.querySelector(".pause-icon");
+        const playIcon = btn.querySelector(".play-icon");
+        if (isHeroAutoPlaying) {
+            pauseIcon.style.display = "block";
+            playIcon.style.display = "none";
+            btn.title = "Pause Hero Slideshow";
+            startHeroAutoPlay();
+        } else {
+            pauseIcon.style.display = "none";
+            playIcon.style.display = "block";
+            btn.title = "Play Hero Slideshow";
+            if (heroAutoPlayTimer) clearInterval(heroAutoPlayTimer);
+        }
+    }
+}
+
+/* =========================================================
+   13. INITIALIZATION ON DOM READY
 ========================================================= */
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
@@ -2116,10 +2291,14 @@ if (document.readyState === "loading") {
         attachCardEventListeners();
         initPrivacyModal();
         initAiHomeTrigger();
+        initTopHeroImageSlider();
+        if (window.location.hash === "#admin") switchAuthTab("admin");
     });
 } else {
     injectEcommerceModals();
     attachCardEventListeners();
     initPrivacyModal();
     initAiHomeTrigger();
+    initTopHeroImageSlider();
+    if (window.location.hash === "#admin") switchAuthTab("admin");
 }

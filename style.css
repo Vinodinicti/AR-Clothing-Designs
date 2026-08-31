@@ -751,6 +751,143 @@ button, input, textarea, select {
 }
 
 /* =========================================================
+   HERO IMAGE NAVIGATION & ANIMATION SYSTEM (ALL PAGES)
+========================================================= */
+.hero-img-nav-wrap {
+    position: absolute;
+    bottom: 24px;
+    right: 5%;
+    z-index: 30 !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transition: var(--transition);
+}
+
+.hero-img-nav-wrap:hover {
+    background: rgba(15, 23, 42, 0.85);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-nav-arrow {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    font-size: 1.15rem;
+    font-weight: 800;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    line-height: 1;
+}
+
+.hero-nav-arrow:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: #D4AF37;
+    transform: scale(1.15);
+}
+
+.hero-nav-dots {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.hero-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.hero-dot:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.25);
+}
+
+.hero-dot.active {
+    width: 22px;
+    border-radius: 12px;
+    background: #D4AF37 !important;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+}
+
+.hero-play-pause-btn {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #FFFFFF;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-left: 2px;
+}
+
+.hero-play-pause-btn:hover {
+    background: #D4AF37;
+    color: #0F172A;
+}
+
+/* Quick Page Navigation Chips on Top Hero - Disabled as requested */
+.hero-page-chips {
+    display: none !important;
+}
+
+.hero-chip {
+    font-family: 'Space Grotesk', 'Outfit', sans-serif !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    color: #0F172A !important;
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(15, 23, 42, 0.15) !important;
+    padding: 3px 10px !important;
+    border-radius: 20px !important;
+    text-decoration: none !important;
+    transition: var(--transition) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.hero-chip:hover {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border-color: #0F172A !important;
+    transform: translateY(-2px) !important;
+}
+
+.hero-chip.active {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border-color: #0F172A !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25) !important;
+}
+
+/* =========================================================
    6. GENERAL SECTIONS & HEADINGS
 ========================================================= */
 .section {
@@ -1939,6 +2076,248 @@ button, input, textarea, select {
 
 .main-service-card:hover::after {
     width: calc(100% - 56px);
+}
+
+/* Admin Contact Card & Modal Styling */
+.admin-contact-card {
+    background: #F8FAFC !important;
+    border-color: #CBD5E1 !important;
+}
+
+.admin-contact-icon {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+}
+
+.admin-link {
+    color: #0F172A !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    font-family: inherit !important;
+    cursor: pointer !important;
+    font-size: inherit !important;
+    font-weight: 700 !important;
+}
+
+.admin-link:hover {
+    color: #D4AF37 !important;
+    text-decoration: underline !important;
+}
+
+#adminLoginModal.modal-overlay {
+    z-index: 999999 !important;
+    background: rgba(15, 23, 42, 0.75) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.admin-modal-container {
+    position: relative !important;
+    max-width: 440px !important;
+    width: 90% !important;
+    padding: 24px 22px !important;
+    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.45) !important;
+    border-radius: 16px !important;
+    background: #FFFFFF !important;
+    transform: scale(1) !important;
+    animation: modalPopForward 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    z-index: 1000000 !important;
+}
+
+@keyframes modalPopForward {
+    from {
+        opacity: 0;
+        transform: scale(0.90) translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.admin-modal-container .modal-close-btn {
+    position: absolute !important;
+    top: 16px !important;
+    right: 16px !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    background: #F1F5F9 !important;
+    color: #0F172A !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.25rem !important;
+    cursor: pointer !important;
+    transition: var(--transition) !important;
+    line-height: 1 !important;
+    z-index: 15 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.admin-modal-container .modal-close-btn:hover {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+}
+
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #0F172A;
+    color: #FFFFFF;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.admin-badge svg {
+    width: 13px;
+    height: 13px;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.admin-notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFBEB;
+    border: 1px solid #FCD34D;
+    color: #92400E;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    margin-top: 4px;
+}
+
+.admin-notice svg {
+    min-width: 16px;
+}
+
+/* Admin Portal Link Box (Below Sign In on login.html) */
+.admin-portal-link-box {
+    margin-top: 24px;
+    padding: 14px 16px;
+    background: #F8FAFC;
+    border: 1.5px dashed #CBD5E1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-portal-link-box span {
+    font-size: 0.78rem;
+    color: #475569;
+    font-weight: 600;
+}
+
+.admin-portal-link-btn {
+    background: #0F172A;
+    color: #FFFFFF;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.admin-portal-link-btn:hover {
+    background: #D4AF37;
+    color: #0F172A;
+}
+
+/* Admin Footer Section (Directly Above Footer) */
+.admin-footer-section {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    padding: 48px 8% !important;
+    border-top: 2px solid #D4AF37 !important;
+    text-align: center !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+.admin-footer-container {
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.admin-footer-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #D4AF37 !important;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    padding: 5px 14px !important;
+    border-radius: 20px !important;
+}
+
+.admin-footer-section h2 {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: clamp(1.4rem, 4vw, 2.1rem) !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
+    margin: 0 !important;
+}
+
+.admin-footer-section p {
+    font-size: 0.92rem !important;
+    color: #94A3B8 !important;
+    line-height: 1.5 !important;
+    margin: 0 0 8px !important;
+}
+
+.admin-footer-login-btn {
+    background: #D4AF37 !important;
+    color: #0F172A !important;
+    border: none !important;
+    font-weight: 800 !important;
+    padding: 10px 24px !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    transition: var(--transition) !important;
+}
+
+.admin-footer-login-btn:hover {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    transform: translateY(-2px) !important;
 }
 
 /* Manufacturing Process (8 Interactive Process Cards) */
@@ -5175,6 +5554,48 @@ button, input, textarea, select {
         inset: auto !important;
     }
 
+    .hero-img-nav-wrap {
+        position: relative !important;
+        bottom: auto !important;
+        right: auto !important;
+        margin: 12px auto 0 !important;
+        z-index: 30 !important;
+        padding: 4px 10px !important;
+        gap: 6px !important;
+        border-radius: 20px !important;
+    }
+
+    .hero-nav-arrow {
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .hero-dot {
+        width: 6px !important;
+        height: 6px !important;
+    }
+
+    .hero-dot.active {
+        width: 16px !important;
+    }
+
+    .hero-play-pause-btn {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .hero-page-chips {
+        justify-content: center !important;
+        margin-bottom: 12px !important;
+        gap: 4px !important;
+    }
+
+    .hero-chip {
+        font-size: 0.60rem !important;
+        padding: 2px 8px !important;
+    }
+
     .hero.index-hero .hero-overlay {
         display: none !important;
     }
@@ -6506,16 +6927,18 @@ button, input, textarea, select {
 
 .auth-tab-btn {
     flex: 1;
-    padding: 12px 18px;
+    padding: 10px 10px;
     border: none;
     background: transparent;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.84rem;
     font-weight: 800;
     color: #64748B;
     border-radius: 9px;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .auth-tab-btn.active {
