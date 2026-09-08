@@ -87,27 +87,28 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Initialize DB and Start Server
-initDb()
-    .then(() => {
-        const server = app.listen(PORT, () => {
-            console.log(`====================================================`);
-            console.log(`🚀 Express SQLite Server running in ${process.env.NODE_ENV || 'development'} mode`);
-            console.log(`🔑 Admin Login: admin@arclothing.com / admin123`);
-            console.log(`📊 Dashboard UI: http://localhost:${PORT}/dashboard`);
-            console.log(`🔐 Login Page: http://localhost:${PORT}/login`);
-            console.log(`====================================================`);
-        });
+// Initialize DB
+initDb().catch((err) => {
+    console.error('❌ Database initialization issue:', err.message);
+});
 
-        server.on('error', (err) => {
-            if (err.code === 'EADDRINUSE') {
-                console.error(`❌ Port ${PORT} is already in use by another process.`);
-                console.error(`💡 Close existing node instance or task, then run 'npm run dev' again.`);
-            } else {
-                console.error('❌ Server error:', err.message);
-            }
-        });
-    })
-    .catch((err) => {
-        console.error('❌ Failed to start server due to database initialization error:', err.message);
-        process.exit(1);
+if (require.main === module || !process.env.VERCEL) {
+    const server = app.listen(PORT, () => {
+        console.log(`====================================================`);
+        console.log(`🚀 Express SQLite Server running in ${process.env.NODE_ENV || 'development'} mode`);
+        console.log(`🔑 Admin Login: admin@arclothing.com / admin123`);
+        console.log(`📊 Dashboard UI: http://localhost:${PORT}/dashboard`);
+        console.log(`🔐 Login Page: http://localhost:${PORT}/login`);
+        console.log(`====================================================`);
     });
+
+    server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.error(`❌ Port ${PORT} is already in use by another process.`);
+        } else {
+            console.error('❌ Server error:', err.message);
+        }
+    });
+}
+
+module.exports = app;
