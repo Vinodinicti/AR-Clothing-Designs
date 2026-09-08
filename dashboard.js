@@ -6,15 +6,12 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 // Authentication Check
 function checkAuth() {
-    let token = localStorage.getItem('ar_admin_token');
-    let userStr = localStorage.getItem('ar_admin_user');
+    const token = localStorage.getItem('ar_admin_token');
+    const userStr = localStorage.getItem('ar_admin_user');
 
     if (!token || !userStr) {
-        token = 'ar_admin_session_token';
-        const defaultAdmin = { name: 'AR Admin', email: 'admin@arclothing.com', role: 'Store Administrator' };
-        localStorage.setItem('ar_admin_token', token);
-        localStorage.setItem('ar_admin_user', JSON.stringify(defaultAdmin));
-        userStr = JSON.stringify(defaultAdmin);
+        window.location.href = 'admin-login.html';
+        return false;
     }
 
     try {
@@ -29,7 +26,21 @@ function checkAuth() {
 }
 
 // Perform Auth Check immediately
-checkAuth();
+if (!checkAuth()) {
+    // Redirecting to admin-login.html
+}
+
+// Logout Handler
+document.addEventListener('DOMContentLoaded', () => {
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('ar_admin_token');
+            localStorage.removeItem('ar_admin_user');
+            window.location.href = 'admin-login.html';
+        });
+    }
+});
 
 // State Management
 let currentTab = 'items'; // 'items', 'orders', 'users', 'cart', or 'likes'
