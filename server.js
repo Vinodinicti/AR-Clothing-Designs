@@ -60,9 +60,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/likes', likeRoutes);
 
-// Redirect Admin Login Page requests to /login#admin
+// Redirect Admin Page requests directly to /dashboard.html
 app.get(['/admin-login', '/admin/login', '/admin'], (req, res) => {
-    res.redirect('/login#admin');
+    res.redirect('/dashboard.html');
 });
 
 // Serve Dashboard HTML at /dashboard and /admin-panel

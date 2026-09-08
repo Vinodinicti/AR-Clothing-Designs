@@ -400,7 +400,7 @@
                 <span class="action-badge cart-badge">0</span>
             </button>
 
-            <a href="login.html" class="header-action-btn account-trigger-btn active" aria-label="Customer Account" title="Account">
+            <a href="dashboard.html" class="header-action-btn account-trigger-btn" aria-label="Admin Portal" title="Admin Portal">
                 <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </a>
 
@@ -472,9 +472,6 @@
                         <button class="auth-tab-btn" id="tab-register-btn" onclick="switchAuthTab('register')">
                             Create Account
                         </button>
-                        <button class="auth-tab-btn" id="tab-admin-btn" onclick="switchAuthTab('admin')">
-                            Admin Portal
-                        </button>
                     </div>
 
 
@@ -542,14 +539,6 @@
                             <button type="button" class="social-auth-btn" onclick="handleSocialAuth('Email')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                 Email
-                            </button>
-                        </div>
-
-                        <!-- ADMIN PORTAL ACCESS LINK -->
-                        <div class="admin-portal-link-box" style="margin-top: 20px; text-align: center; font-size: 13px;">
-                            <span style="color: #94A3B8;">Are you an AR Clothing staff member?</span>
-                            <button type="button" class="admin-portal-link-btn" onclick="switchAuthTab('admin')" style="background: none; border: none; color: #E5C158; font-weight: 700; cursor: pointer; text-decoration: underline; margin-left: 5px;">
-                                Admin Sign In →
                             </button>
                         </div>
 
@@ -628,59 +617,6 @@
                         <button type="submit" class="auth-submit-btn">
                             Create Customer Account →
                         </button>
-                    </form>
-
-
-                    <!-- ADMIN SIGN IN FORM (INTEGRATED NEXT TO CREATE ACCOUNT) -->
-                    <form id="admin-form" class="auth-form" onsubmit="handleAdminLoginSubmit(event)">
-
-                        <div class="auth-header-title">
-                            <div class="admin-badge" style="margin-bottom: 8px; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(229,193,88,0.15); color: #E5C158; border: 1px solid #E5C158; border-radius: 20px; font-size: 11px; font-weight: 700;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                STAFF & ADMIN PORTAL
-                            </div>
-                            <h2>Administrator Sign In</h2>
-                            <p>Authorized personnel access for order tracking, client quotes, and design inventory.</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="page-admin-email">Admin Email or ID <span class="req">*</span></label>
-                            <div class="input-with-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                <input type="email" id="page-admin-email" value="admin@arclothing.com" placeholder="admin@arclothing.com" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="page-admin-password">Admin Password <span class="req">*</span></label>
-                            <div class="input-with-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                <input type="password" id="page-admin-password" value="admin123" placeholder="••••••••" required>
-                                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('page-admin-password', this)">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="page-admin-role">Staff Access Level</label>
-                            <select id="page-admin-role" class="styled-select" style="width: 100%; padding: 12px; border-radius: 8px; background: #0F172A; color: #FFF; border: 1px solid #334155;">
-                                <option value="super-admin">Store Administrator (Full Control)</option>
-                                <option value="design-lead">Lead Fashion Designer</option>
-                                <option value="production-manager">Production & Factory Manager</option>
-                                <option value="sales-manager">Commercial Sales Lead</option>
-                            </select>
-                        </div>
-
-                        <div class="admin-notice" style="margin-bottom: 18px; padding: 10px 14px; background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; color: #FDE047; font-size: 12px; display: flex; align-items: center; gap: 8px;">
-                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                            <span>Restricted Access: Authorized AR Clothing Personnel Only.</span>
-                        </div>
-
-                        <button type="submit" class="auth-submit-btn" style="background: linear-gradient(135deg, #E5C158 0%, #C5A038 100%); color: #0F172A;">
-                            Access Admin Dashboard →
-                        </button>
-
                     </form>
 
                 </div>
@@ -821,15 +757,18 @@
     <!-- INLINE TAB & AUTH HANDLER SCRIPT -->
     <script>
         function switchAuthTab(tabName) {
+            if (tabName === 'admin') {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
             const signinBtn = document.getElementById('tab-signin-btn');
             const registerBtn = document.getElementById('tab-register-btn');
-            const adminBtn = document.getElementById('tab-admin-btn');
             const signinForm = document.getElementById('signin-form');
             const registerForm = document.getElementById('register-form');
-            const adminForm = document.getElementById('admin-form');
 
-            [signinBtn, registerBtn, adminBtn].forEach(btn => btn && btn.classList.remove('active'));
-            [signinForm, registerForm, adminForm].forEach(form => form && form.classList.remove('active'));
+            [signinBtn, registerBtn].forEach(btn => btn && btn.classList.remove('active'));
+            [signinForm, registerForm].forEach(form => form && form.classList.remove('active'));
 
             if (tabName === 'signin') {
                 if (signinBtn) signinBtn.classList.add('active');
@@ -837,15 +776,12 @@
             } else if (tabName === 'register') {
                 if (registerBtn) registerBtn.classList.add('active');
                 if (registerForm) registerForm.classList.add('active');
-            } else if (tabName === 'admin') {
-                if (adminBtn) adminBtn.classList.add('active');
-                if (adminForm) adminForm.classList.add('active');
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             if (window.location.hash === '#admin') {
-                switchAuthTab('admin');
+                window.location.href = 'dashboard.html';
             }
         });
 

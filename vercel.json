@@ -5,6 +5,7 @@
     { "source": "/dashboard", "destination": "/dashboard.html" },
     { "source": "/admin-panel", "destination": "/dashboard.html" },
     { "source": "/login", "destination": "/login.html" },
-    { "source": "/admin-login", "destination": "/login.html" }
+    { "source": "/admin-login", "destination": "/dashboard.html" },
+    { "source": "/admin", "destination": "/dashboard.html" }
   ]
 }
