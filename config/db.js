@@ -111,17 +111,37 @@ const initDb = () => {
                 )
             `;
 
+            // Project Enquiries Table
+            const createEnquiriesSql = `
+                CREATE TABLE IF NOT EXISTS enquiries (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    enquiry_code TEXT UNIQUE NOT NULL,
+                    name TEXT NOT NULL,
+                    company TEXT,
+                    email TEXT NOT NULL,
+                    phone TEXT NOT NULL,
+                    service TEXT NOT NULL,
+                    quantity TEXT NOT NULL,
+                    timeline TEXT,
+                    budget TEXT,
+                    message TEXT NOT NULL,
+                    status TEXT NOT NULL DEFAULT 'Pending Review',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            `;
+
             db.run(createItemsSql);
             db.run(createOrdersSql);
             db.run(createUsersSql);
             db.run(createCartSql);
             db.run(createLikesSql);
+            db.run(createEnquiriesSql);
 
             // Safely migrate orders table columns if they do not exist yet
             db.run("ALTER TABLE orders ADD COLUMN courier_name TEXT DEFAULT 'BlueDart Express'", () => {});
             db.run("ALTER TABLE orders ADD COLUMN tracking_awb TEXT DEFAULT 'AWB-98421074'", () => {});
 
-            console.log('✅ Items, Orders, Users, Cart, and Likes tables ready.');
+            console.log('✅ Items, Orders, Users, Cart, Likes, and Enquiries tables ready.');
             resolve();
         });
     });

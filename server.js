@@ -59,6 +59,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/likes', likeRoutes);
+app.use('/api/enquiries', enquiryRoutes);
 
 // Serve Admin Login Page at /admin-login and /admin
 app.get(['/admin-login', '/admin/login', '/admin'], (req, res) => {

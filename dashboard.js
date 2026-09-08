@@ -43,12 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // State Management
-let currentTab = 'items'; // 'items', 'orders', 'users', 'cart', or 'likes'
+let currentTab = 'items'; // 'items', 'orders', 'users', 'cart', 'likes', or 'enquiries'
 let itemsData = [];
 let ordersData = [];
 let usersData = [];
 let cartData = [];
 let likesData = [];
+let enquiriesData = [];
 
 // DOM Elements
 const themeToggleBtn = document.getElementById('themeToggleBtn');
@@ -57,6 +58,7 @@ const tabItems = document.getElementById('tabItems');
 const tabOrders = document.getElementById('tabOrders');
 const tabUsers = document.getElementById('tabUsers');
 const tabCart = document.getElementById('tabCart');
+const tabEnquiries = document.getElementById('tabEnquiries');
 const openAddModalBtn = document.getElementById('openAddModalBtn');
 const addBtnText = document.getElementById('addBtnText');
 
@@ -123,6 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tabOrders) tabOrders.addEventListener('click', () => switchTab('orders'));
     if (tabUsers) tabUsers.addEventListener('click', () => switchTab('users'));
     if (tabCart) tabCart.addEventListener('click', () => switchTab('cart'));
+    if (tabEnquiries) tabEnquiries.addEventListener('click', () => switchTab('enquiries'));
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'ar_project_enquiries') {
+            loadTableData();
+        }
+    });
 
     if (searchInput) searchInput.addEventListener('input', filterAndRenderTable);
     if (categoryFilter) categoryFilter.addEventListener('change', filterAndRenderTable);
@@ -189,6 +198,7 @@ function switchTab(tab) {
     tabOrders.classList.remove('active');
     tabUsers.classList.remove('active');
     if (tabCart) tabCart.classList.remove('active');
+    if (tabEnquiries) tabEnquiries.classList.remove('active');
     mainTableCard.classList.remove('unique-orders-card');
 
     if (tab === 'items') {
@@ -211,6 +221,10 @@ function switchTab(tab) {
         if (tabCart) tabCart.classList.add('active');
         openAddModalBtn.style.display = 'none';
         searchInput.placeholder = 'Search product summary by title or category...';
+    } else if (tab === 'enquiries') {
+        if (tabEnquiries) tabEnquiries.classList.add('active');
+        openAddModalBtn.style.display = 'none';
+        searchInput.placeholder = 'Search project enquiries by client name, email, company, or service...';
     }
 
     renderTableHead();
@@ -307,6 +321,31 @@ async function loadTableData() {
         if (cartJson.success) cartData = cartJson.data;
         if (likesJson.success) likesData = likesJson.data;
 
+        // Fetch Enquiries
+        try {
+            let enquiriesRes = await fetch(`${API_BASE_URL}/enquiries`);
+            if (!enquiriesRes.ok) {
+                enquiriesRes = await fetch(`http://localhost:5000/api/enquiries`);
+            }
+            if (enquiriesRes.ok) {
+                const enquiriesJson = await enquiriesRes.json();
+                if (enquiriesJson.success && Array.isArray(enquiriesJson.data)) {
+                    enquiriesData = enquiriesJson.data;
+                }
+            }
+        } catch (e) {}
+
+        // Merge localStorage project enquiries for static host or offline fallback
+        try {
+            const localEnquiries = JSON.parse(localStorage.getItem('ar_project_enquiries') || '[]');
+            const existingCodes = new Set(enquiriesData.map(e => e.enquiry_code));
+            localEnquiries.forEach(item => {
+                if (item && item.enquiry_code && !existingCodes.has(item.enquiry_code)) {
+                    enquiriesData.push(item);
+                }
+            });
+        } catch (e) {}
+
         filterAndRenderTable();
     } catch (err) {
         console.error('❌ Error fetching data:', err);
@@ -366,6 +405,17 @@ function renderTableHead() {
             <th>📦 TOTAL ORDERS</th>
             <th>ACTIONS</th>
         `;
+    } else if (currentTab === 'enquiries') {
+        tableHeadRow.innerHTML = `
+            <th>ENQ CODE</th>
+            <th>CLIENT & COMPANY</th>
+            <th>CONTACT INFO</th>
+            <th>SERVICE & QTY</th>
+            <th>BUDGET & TIMELINE</th>
+            <th>PROJECT DETAILS & REQUIREMENTS</th>
+            <th>STATUS (EDITABLE)</th>
+            <th>ACTIONS</th>
+        `;
     }
 }
 
@@ -407,6 +457,20 @@ function filterAndRenderTable() {
         });
 
         renderCartRows(filteredItems);
+    } else if (currentTab === 'enquiries') {
+        const filteredEnquiries = enquiriesData.filter(enq => {
+            const matchesSearch = !search ||
+                (enq.name && enq.name.toLowerCase().includes(search)) ||
+                (enq.company && enq.company.toLowerCase().includes(search)) ||
+                (enq.email && enq.email.toLowerCase().includes(search)) ||
+                (enq.service && enq.service.toLowerCase().includes(search)) ||
+                (enq.enquiry_code && enq.enquiry_code.toLowerCase().includes(search)) ||
+                (enq.message && enq.message.toLowerCase().includes(search));
+            const matchesStatus = status === 'all' || (enq.status && enq.status.toLowerCase() === status);
+            return matchesSearch && matchesStatus;
+        });
+
+        renderEnquiriesRows(filteredEnquiries);
     }
 }
 
@@ -904,3 +968,127 @@ function escapeHtml(str) {
         "'": '&#39;'
     })[match]);
 }
+
+function renderEnquiriesRows(enquiries) {
+    if (!enquiries || enquiries.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="8" class="empty-state">
+                    <div style="padding: 36px; text-align: center; color: #94A3B8;">
+                        <i class="fa-solid fa-clipboard-list" style="font-size: 32px; color: #E5C158; margin-bottom: 10px; display: block;"></i>
+                        <h4 style="color: #FFF; font-size: 16px; margin: 0 0 4px;">No Project Enquiries Found</h4>
+                        <p style="font-size: 13px; margin: 0;">Project enquiries submitted through the Contact page will appear here live.</p>
+                    </div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    const statusOptions = ['Pending Review', 'Quote Sent', 'In Discussion', 'Approved', 'Closed'];
+
+    tableBody.innerHTML = enquiries.map(enq => {
+        const code = enq.enquiry_code || ('ENQ-' + enq.id);
+        const name = escapeHtml(enq.name || 'Valued Client');
+        const company = enq.company ? `<div style="font-size: 11px; color: #E5C158; font-weight: 700; margin-top: 2px;">🏢 ${escapeHtml(enq.company)}</div>` : '';
+        const email = escapeHtml(enq.email || '');
+        const phone = escapeHtml(enq.phone || '');
+        const service = escapeHtml(enq.service || 'Custom Garment Project');
+        const quantity = escapeHtml(enq.quantity || 'N/A');
+        const timeline = escapeHtml(enq.timeline || 'Flexible');
+        const budget = escapeHtml(enq.budget || 'Under ₹25,000');
+        const message = escapeHtml(enq.message || 'No additional details provided.');
+        const currentStatus = enq.status || 'Pending Review';
+        const dateStr = enq.created_at ? new Date(enq.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recent';
+
+        const statusSelectOptions = statusOptions.map(opt => 
+            `<option value="${opt}" ${opt.toLowerCase() === currentStatus.toLowerCase() ? 'selected' : ''}>${opt}</option>`
+        ).join('');
+
+        let badgeStyle = 'background: #0F172A; color: #E5C158; border: 1px solid #334155;';
+        if (currentStatus === 'Quote Sent') badgeStyle = 'background: rgba(59,130,246,0.15); color: #60A5FA; border: 1px solid rgba(59,130,246,0.3);';
+        else if (currentStatus === 'Approved') badgeStyle = 'background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3);';
+        else if (currentStatus === 'Closed') badgeStyle = 'background: rgba(100,116,139,0.15); color: #94A3B8; border: 1px solid rgba(100,116,139,0.3);';
+
+        return `
+            <tr>
+                <td style="font-family: monospace; font-weight: 800; color: #E5C158; white-space: nowrap;">${code}</td>
+                <td>
+                    <div style="font-weight: 700; color: #FFFFFF;">${name}</div>
+                    ${company}
+                </td>
+                <td style="font-size: 13px; white-space: nowrap;">
+                    <div style="color: #F1F5F9;">✉️ ${email}</div>
+                    <div style="color: #34D399; margin-top: 2px;">📞 ${phone}</div>
+                </td>
+                <td style="font-size: 13px;">
+                    <div style="font-weight: 700; color: #FFF;">${service}</div>
+                    <span style="display: inline-block; padding: 2px 8px; background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 11px; color: #CBD5E1; margin-top: 4px;">
+                        📦 ${quantity}
+                    </span>
+                </td>
+                <td style="font-size: 13px; white-space: nowrap;">
+                    <div style="color: #E5C158; font-weight: 700;">💰 ${budget}</div>
+                    <div style="color: #94A3B8; margin-top: 2px;">⏳ ${timeline}</div>
+                </td>
+                <td style="max-width: 280px; font-size: 12px; color: #CBD5E1; line-height: 1.4;">
+                    <div style="background: rgba(15,23,42,0.7); padding: 8px 10px; border-radius: 8px; border: 1px solid #334155;">
+                        "${message}"
+                    </div>
+                </td>
+                <td style="white-space: nowrap;">
+                    <select onchange="updateEnquiryStatus('${enq.id}', this.value)" class="styled-select" style="padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; ${badgeStyle}">
+                        ${statusSelectOptions}
+                    </select>
+                </td>
+                <td style="font-size: 12px; color: #94A3B8; white-space: nowrap;">
+                    <div>📅 ${dateStr}</div>
+                    <button onclick="deleteEnquiry('${enq.id}')" class="btn-action delete" style="margin-top: 6px;" title="Delete Project Enquiry">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+window.updateEnquiryStatus = async function(id, newStatus) {
+    try {
+        await fetch(`${API_BASE_URL}/enquiries/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+        });
+    } catch (e) {}
+
+    enquiriesData = enquiriesData.map(enq => {
+        if (String(enq.id) === String(id) || String(enq.enquiry_code) === String(id)) {
+            return { ...enq, status: newStatus };
+        }
+        return enq;
+    });
+
+    try {
+        localStorage.setItem('ar_project_enquiries', JSON.stringify(enquiriesData));
+    } catch (e) {}
+
+    filterAndRenderTable();
+};
+
+window.deleteEnquiry = async function(id) {
+    if (!confirm('Are you sure you want to delete this project enquiry?')) return;
+
+    try {
+        await fetch(`${API_BASE_URL}/enquiries/${id}`, {
+            method: 'DELETE'
+        });
+    } catch (e) {}
+
+    enquiriesData = enquiriesData.filter(enq => String(enq.id) !== String(id) && String(enq.enquiry_code) !== String(id));
+
+    try {
+        localStorage.setItem('ar_project_enquiries', JSON.stringify(enquiriesData));
+    } catch (e) {}
+
+    filterAndRenderTable();
+};

@@ -275,7 +275,7 @@
                         </p>
                     </div>
 
-                    <form id="contactForm" class="enquiry-form">
+                    <form id="contactForm" class="enquiry-form" onsubmit="handleProjectEnquirySubmit(event)">
 
                         <!-- Row 1: Name & Company -->
                         <div class="form-row two-col">
@@ -647,6 +647,107 @@
 
 
 
+    <script>
+        async function handleProjectEnquirySubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('contactForm');
+            const msgBox = document.getElementById('formMessage');
+
+            const name = document.getElementById('name').value.trim();
+            const company = document.getElementById('company').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const requirementSelect = document.getElementById('requirement');
+            const service = requirementSelect.options[requirementSelect.selectedIndex].text;
+            const quantitySelect = document.getElementById('quantity');
+            const quantity = quantitySelect.options[quantitySelect.selectedIndex].text;
+            const timelineSelect = document.getElementById('timeline');
+            const timeline = timelineSelect.options[timelineSelect.selectedIndex].text;
+            const budgetSelect = document.getElementById('budget');
+            const budget = budgetSelect.options[budgetSelect.selectedIndex].text;
+            const message = document.getElementById('message').value.trim();
+
+            const enquiryData = {
+                name,
+                company: company || 'Independent',
+                email,
+                phone,
+                service,
+                quantity,
+                timeline,
+                budget,
+                message
+            };
+
+            let savedEnquiry = null;
+
+            try {
+                let res = await fetch('/api/enquiries', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(enquiryData)
+                });
+                if (!res.ok) {
+                    res = await fetch('http://localhost:5000/api/enquiries', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(enquiryData)
+                    });
+                }
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.success) {
+                        savedEnquiry = json.data;
+                    }
+                }
+            } catch (err) {
+                console.warn('Backend API connection offline. Storing enquiry in localStorage.');
+            }
+
+            if (!savedEnquiry) {
+                savedEnquiry = {
+                    id: Date.now(),
+                    enquiry_code: 'ENQ-2026-' + Math.floor(1000 + Math.random() * 9000),
+                    name,
+                    company: company || 'Independent',
+                    email,
+                    phone,
+                    service,
+                    quantity,
+                    timeline,
+                    budget,
+                    message,
+                    status: 'Pending Review',
+                    created_at: new Date().toISOString().replace('T', ' ').substring(0, 19)
+                };
+            }
+
+            // Save to localStorage for instant cross-tab sync and static host support
+            try {
+                const localEnquiries = JSON.parse(localStorage.getItem('ar_project_enquiries') || '[]');
+                localEnquiries.unshift(savedEnquiry);
+                localStorage.setItem('ar_project_enquiries', JSON.stringify(localEnquiries));
+                window.dispatchEvent(new Event('storage'));
+            } catch (e) {}
+
+            // Render Success Card inside form
+            if (msgBox) {
+                msgBox.style.display = 'block';
+                msgBox.innerHTML = `
+                    <div class="enquiry-success-card" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10B981; border-radius: 16px; padding: 24px; color: #A7F3D0; margin-top: 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background: #10B981; color: #0F172A; display: flex; align-items: center; justify-content: center; font-weight: 800;">✓</div>
+                            <h4 style="color: #10B981; font-size: 18px; font-weight: 700; margin: 0;">Project Enquiry Submitted Successfully!</h4>
+                        </div>
+                        <p style="margin: 6px 0; color: #E2E8F0; font-size: 14px;">Thank you, <strong>${name}</strong>. Your project enquiry reference is <strong style="color: #E5C158; font-family: monospace;">${savedEnquiry.enquiry_code}</strong>.</p>
+                        <p style="margin: 0; color: #94A3B8; font-size: 13px;">Our design & manufacturing specialists will review your requirements and send a customized quote within 24 hours.</p>
+                    </div>
+                `;
+            }
+
+            form.reset();
+        }
+    </script>
     <script src="script.js"></script>
 
 </body>
