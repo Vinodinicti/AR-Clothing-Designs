@@ -2,7 +2,9 @@
    AR CLOTHING & DESIGNS - DASHBOARD JS CONTROLLER
    ========================================================= */
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = (typeof window !== 'undefined' && window.location && window.location.protocol !== 'file:') 
+    ? (window.location.origin.includes(':5000') ? '/api' : (window.location.origin + '/api')) 
+    : 'http://localhost:5000/api';
 
 // Authentication Check
 function checkAuth() {

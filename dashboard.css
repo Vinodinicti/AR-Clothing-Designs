@@ -905,3 +905,234 @@ body::before {
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
+/* =========================================================
+   COMPREHENSIVE MOBILE RESPONSIVE MEDIA QUERIES
+   ========================================================= */
+
+@media (max-width: 992px) {
+    .dashboard-container {
+        padding: 24px 20px;
+    }
+
+    .header-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        padding: 24px;
+    }
+
+    .brand-wrapper {
+        width: 100%;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 14px 10px;
+    }
+
+    .header-card {
+        padding: 18px 16px;
+        border-radius: var(--radius-md);
+        gap: 14px;
+    }
+
+    .brand-wrapper {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .brand-logo-img {
+        height: 38px;
+        max-width: 44px;
+    }
+
+    .brand-info h1 {
+        font-size: 20px;
+        letter-spacing: -0.5px;
+    }
+
+    .brand-info p {
+        font-size: 12px;
+    }
+
+    .header-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .user-badge {
+        width: 100%;
+        margin-bottom: 4px;
+        font-size: 13px !important;
+    }
+
+    .header-actions .btn-primary,
+    .header-actions .btn-secondary {
+        flex: 1;
+        min-width: 130px;
+        padding: 10px 14px;
+        font-size: 13px;
+        justify-content: center;
+    }
+
+    .nav-tabs-wrapper {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px;
+        gap: 8px;
+        border-bottom: 2px solid var(--border-color);
+        margin-bottom: 20px;
+    }
+
+    .nav-tabs-wrapper::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .nav-tabs-wrapper::-webkit-scrollbar-thumb {
+        background: rgba(229, 193, 88, 0.4);
+        border-radius: 4px;
+    }
+
+    .tab-btn {
+        flex-shrink: 0;
+        padding: 10px 14px;
+        font-size: 13px;
+        border-radius: var(--radius-sm);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        padding: 14px;
+        border-radius: var(--radius-sm);
+    }
+
+    .stat-label {
+        font-size: 10px;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+        margin-top: 4px;
+    }
+
+    .stat-icon-box {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+
+    .filter-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .search-box {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .filter-group {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .table-card {
+        padding: 12px 8px;
+        border-radius: var(--radius-md);
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 8px;
+    }
+
+    .data-table th {
+        padding: 12px 14px;
+        font-size: 11px;
+    }
+
+    .data-table td {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+
+    .modal-card {
+        width: 95% !important;
+        max-width: 95% !important;
+        padding: 20px 16px !important;
+        border-radius: 18px !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-card h3 {
+        font-size: 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .brand-info h1 {
+        font-size: 17px;
+    }
+
+    .brand-info p {
+        display: none;
+    }
+
+    .header-actions .btn-primary,
+    .header-actions .btn-secondary {
+        width: 100%;
+        flex: none;
+    }
+
+    .tab-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
+
