@@ -974,10 +974,10 @@ function renderEnquiriesRows(enquiries) {
         tableBody.innerHTML = `
             <tr>
                 <td colspan="8" class="empty-state">
-                    <div style="padding: 36px; text-align: center; color: #94A3B8;">
-                        <i class="fa-solid fa-clipboard-list" style="font-size: 32px; color: #E5C158; margin-bottom: 10px; display: block;"></i>
-                        <h4 style="color: #FFF; font-size: 16px; margin: 0 0 4px;">No Project Enquiries Found</h4>
-                        <p style="font-size: 13px; margin: 0;">Project enquiries submitted through the Contact page will appear here live.</p>
+                    <div style="padding: 36px; text-align: center; color: #64748B;">
+                        <i class="fa-solid fa-clipboard-list" style="font-size: 32px; color: #0F172A; margin-bottom: 10px; display: block;"></i>
+                        <h4 style="color: #0F172A; font-size: 16px; margin: 0 0 4px; font-weight: 800;">No Project Enquiries Found</h4>
+                        <p style="font-size: 13px; margin: 0; color: #475569;">Project enquiries submitted through the Contact page will appear here live.</p>
                     </div>
                 </td>
             </tr>
@@ -990,7 +990,7 @@ function renderEnquiriesRows(enquiries) {
     tableBody.innerHTML = enquiries.map(enq => {
         const code = enq.enquiry_code || ('ENQ-' + enq.id);
         const name = escapeHtml(enq.name || 'Valued Client');
-        const company = enq.company ? `<div style="font-size: 11px; color: #E5C158; font-weight: 700; margin-top: 2px;">🏢 ${escapeHtml(enq.company)}</div>` : '';
+        const company = enq.company ? `<div style="font-size: 11.5px; color: #475569; font-weight: 700; margin-top: 2px;">${escapeHtml(enq.company)}</div>` : '';
         const email = escapeHtml(enq.email || '');
         const phone = escapeHtml(enq.phone || '');
         const service = escapeHtml(enq.service || 'Custom Garment Project');
@@ -1005,34 +1005,34 @@ function renderEnquiriesRows(enquiries) {
             `<option value="${opt}" ${opt.toLowerCase() === currentStatus.toLowerCase() ? 'selected' : ''}>${opt}</option>`
         ).join('');
 
-        let badgeStyle = 'background: #0F172A; color: #E5C158; border: 1px solid #334155;';
-        if (currentStatus === 'Quote Sent') badgeStyle = 'background: rgba(59,130,246,0.15); color: #60A5FA; border: 1px solid rgba(59,130,246,0.3);';
-        else if (currentStatus === 'Approved') badgeStyle = 'background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3);';
-        else if (currentStatus === 'Closed') badgeStyle = 'background: rgba(100,116,139,0.15); color: #94A3B8; border: 1px solid rgba(100,116,139,0.3);';
+        let badgeStyle = 'background: #0F172A; color: #FFFFFF; border: 1px solid #0F172A;';
+        if (currentStatus === 'Quote Sent') badgeStyle = 'background: #DBEAFE; color: #1E40AF; border: 1px solid #93C5FD;';
+        else if (currentStatus === 'Approved') badgeStyle = 'background: #D1FAE5; color: #065F46; border: 1px solid #6EE7B7;';
+        else if (currentStatus === 'Closed') badgeStyle = 'background: #F1F5F9; color: #334155; border: 1px solid #CBD5E1;';
 
         return `
             <tr>
-                <td style="font-family: monospace; font-weight: 800; color: #E5C158; white-space: nowrap;">${code}</td>
+                <td style="font-family: monospace; font-weight: 800; color: #0F172A; white-space: nowrap;">${code}</td>
                 <td>
-                    <div style="font-weight: 700; color: #FFFFFF;">${name}</div>
+                    <div style="font-weight: 700; color: #0F172A;">${name}</div>
                     ${company}
                 </td>
                 <td style="font-size: 13px; white-space: nowrap;">
-                    <div style="color: #F1F5F9;">✉️ ${email}</div>
-                    <div style="color: #34D399; margin-top: 2px;">📞 ${phone}</div>
+                    <div style="color: #0F172A; font-weight: 600;">${email}</div>
+                    <div style="color: #0F172A; font-weight: 600; margin-top: 2px;">${phone}</div>
                 </td>
                 <td style="font-size: 13px;">
-                    <div style="font-weight: 700; color: #FFF;">${service}</div>
-                    <span style="display: inline-block; padding: 2px 8px; background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 11px; color: #CBD5E1; margin-top: 4px;">
-                        📦 ${quantity}
+                    <div style="font-weight: 700; color: #0F172A;">${service}</div>
+                    <span style="display: inline-block; padding: 2px 8px; background: #E2E8F0; border-radius: 12px; font-size: 11px; color: #0F172A; font-weight: 700; margin-top: 4px;">
+                        ${quantity}
                     </span>
                 </td>
                 <td style="font-size: 13px; white-space: nowrap;">
-                    <div style="color: #E5C158; font-weight: 700;">💰 ${budget}</div>
-                    <div style="color: #94A3B8; margin-top: 2px;">⏳ ${timeline}</div>
+                    <div style="color: #0F172A; font-weight: 700;">${budget}</div>
+                    <div style="color: #475569; font-weight: 600; margin-top: 2px;">${timeline}</div>
                 </td>
-                <td style="max-width: 280px; font-size: 12px; color: #CBD5E1; line-height: 1.4;">
-                    <div style="background: rgba(15,23,42,0.7); padding: 8px 10px; border-radius: 8px; border: 1px solid #334155;">
+                <td style="max-width: 280px; font-size: 12.5px; color: #0F172A; line-height: 1.4;">
+                    <div style="background: #F8FAFC; padding: 8px 12px; border-radius: 8px; border: 1px solid #CBD5E1; color: #0F172A; font-weight: 600;">
                         "${message}"
                     </div>
                 </td>
@@ -1041,8 +1041,8 @@ function renderEnquiriesRows(enquiries) {
                         ${statusSelectOptions}
                     </select>
                 </td>
-                <td style="font-size: 12px; color: #94A3B8; white-space: nowrap;">
-                    <div>📅 ${dateStr}</div>
+                <td style="font-size: 12px; color: #475569; font-weight: 600; white-space: nowrap;">
+                    <div>${dateStr}</div>
                     <button onclick="deleteEnquiry('${enq.id}')" class="btn-action delete" style="margin-top: 6px;" title="Delete Project Enquiry">
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
