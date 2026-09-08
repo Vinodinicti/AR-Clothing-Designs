@@ -14,26 +14,75 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
+        body {
+            background-color: #F8FAFC;
+            color: #0F172A;
+        }
+
+        .header {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E2E8F0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 15px 40px;
+        }
+
+        .brand-name {
+            color: #0F172A !important;
+        }
+
+        .brand-tagline {
+            color: #C5A038 !important;
+        }
+
+        .header-action-btn {
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            color: #0F172A;
+        }
+
+        .header-action-btn svg {
+            stroke: #0F172A;
+        }
+
+        .header-action-btn:hover {
+            background: #E2E8F0;
+        }
+
+        .header-action-btn.active {
+            background: #0F172A;
+            color: #E5C158;
+            border-color: #E5C158;
+        }
+
+        .header-action-btn.active svg {
+            stroke: #E5C158;
+        }
+
         .admin-login-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 180px);
-            padding: 60px 20px;
-            background: radial-gradient(circle at top right, rgba(229, 193, 88, 0.08) 0%, transparent 60%),
-                        linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+            min-height: calc(100vh - 160px);
+            padding: 70px 20px;
+            background: radial-gradient(circle at 50% 20%, rgba(229, 193, 88, 0.12) 0%, transparent 60%),
+                        linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
         }
 
         .admin-auth-card {
             width: 100%;
             max-width: 480px;
-            background: rgba(15, 23, 42, 0.85);
+            background: #0F172A;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(229, 193, 88, 0.35);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(229, 193, 88, 0.1);
+            border: 1.5px solid rgba(229, 193, 88, 0.4);
+            border-radius: 24px;
+            padding: 44px 40px;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35), 0 0 30px rgba(229, 193, 88, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .admin-auth-card:hover {
+            box-shadow: 0 30px 60px -10px rgba(15, 23, 42, 0.45), 0 0 40px rgba(229, 193, 88, 0.25);
         }
 
         .admin-header-title {
@@ -41,30 +90,46 @@
             margin-bottom: 28px;
         }
 
+        .admin-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(229, 193, 88, 0.12);
+            color: #E5C158;
+            border: 1px solid rgba(229, 193, 88, 0.35);
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         .admin-header-title h2 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
             color: #FFFFFF;
-            margin: 10px 0 6px;
+            margin: 14px 0 8px;
             letter-spacing: -0.5px;
+            font-family: 'Outfit', sans-serif;
         }
 
         .admin-header-title p {
             color: #94A3B8;
             font-size: 14px;
             margin: 0;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .admin-input-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .admin-input-group label {
             display: block;
             font-size: 13px;
             font-weight: 700;
-            color: #CBD5E1;
+            color: #E2E8F0;
             margin-bottom: 8px;
             letter-spacing: 0.3px;
         }
@@ -86,54 +151,68 @@
             height: 18px;
             stroke: #94A3B8;
             pointer-events: none;
+            transition: stroke 0.2s ease;
         }
 
         .admin-input-box input,
         .admin-input-box select {
             width: 100%;
-            padding: 12px 14px 12px 42px;
-            background: #0F172A;
+            padding: 13px 14px 13px 44px;
+            background: #1E293B;
             border: 1px solid #334155;
-            border-radius: 10px;
+            border-radius: 12px;
             color: #FFFFFF;
             font-size: 14px;
             font-family: inherit;
             transition: all 0.25s ease;
         }
 
+        .admin-input-box input::placeholder {
+            color: #64748B;
+        }
+
         .admin-input-box input:focus,
         .admin-input-box select:focus {
             outline: none;
+            background: #0F172A;
             border-color: #E5C158;
-            box-shadow: 0 0 0 3px rgba(229, 193, 88, 0.2);
+            box-shadow: 0 0 0 4px rgba(229, 193, 88, 0.18);
+        }
+
+        .admin-input-box input:focus + svg,
+        .admin-input-box select:focus + svg,
+        .admin-input-box:focus-within svg {
+            stroke: #E5C158;
         }
 
         .admin-submit-btn {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             background: linear-gradient(135deg, #E5C158 0%, #C5A038 100%);
             color: #0F172A;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 15px;
             font-weight: 800;
+            letter-spacing: 0.3px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(229, 193, 88, 0.3);
+            box-shadow: 0 4px 20px rgba(229, 193, 88, 0.35);
             margin-top: 10px;
         }
 
         .admin-submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(229, 193, 88, 0.45);
+            box-shadow: 0 8px 28px rgba(229, 193, 88, 0.5);
+            background: linear-gradient(135deg, #F3D068 0%, #D4AE42 100%);
         }
 
         .admin-notice-banner {
             margin-bottom: 24px;
             padding: 12px 16px;
-            background: rgba(234, 179, 8, 0.1);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 10px;
+            background: rgba(234, 179, 8, 0.08);
+            border: 1px solid rgba(234, 179, 8, 0.25);
+            border-radius: 12px;
             color: #FDE047;
             font-size: 13px;
             display: flex;
@@ -155,21 +234,6 @@
             </div>
         </a>
 
-        <button class="mobile-nav-toggle" aria-label="Toggle Menu" title="Toggle Menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-        <nav class="nav-menu">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="services.html">Services</a>
-            <a href="designs.html">Designs</a>
-            <a href="contact.html">Contact</a>
-            <a href="login.html">Account</a>
-        </nav>
-
         <div class="header-actions">
             <button class="header-action-btn search-trigger-btn" aria-label="Search" title="Search">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -189,8 +253,6 @@
                 <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </a>
         </div>
-
-        <a href="contact.html#contact-form" class="nav-button">Enquire Now</a>
     </header>
 
     <!-- MAIN ADMIN LOGIN SECTION -->
@@ -199,7 +261,7 @@
             <div class="admin-auth-card">
 
                 <div class="admin-header-title">
-                    <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(229,193,88,0.15); color: #E5C158; border: 1px solid #E5C158; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase;">
+                    <div class="admin-badge-pill">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                         STAFF & EXECUTIVE PORTAL
                     </div>
