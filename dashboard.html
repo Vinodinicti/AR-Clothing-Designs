@@ -25,15 +25,17 @@
                 </div>
             </div>
             <div class="header-actions">
-                <div class="user-badge" id="adminUserBadge" style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #FFFFFF; font-size: 14px;">
-                    <i class="fa-solid fa-user-gear" style="color: var(--gold-bright);"></i> <span id="adminNameDisplay">AR Admin</span>
+                <div class="user-badge" id="adminUserBadge">
+                    <i class="fa-solid fa-user-gear"></i> <span id="adminNameDisplay">AR Admin</span>
                 </div>
-                <button class="btn-primary" id="openAddModalBtn">
-                    <i class="fa-solid fa-plus"></i> <span id="addBtnText">Add Clothing Product</span>
-                </button>
-                <button class="btn-secondary logout-header-btn" id="logoutBtn" title="Logout Admin">
-                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
-                </button>
+                <div class="header-btn-group">
+                    <button class="btn-primary" id="openAddModalBtn">
+                        <i class="fa-solid fa-plus"></i> <span id="addBtnText">Create Product</span>
+                    </button>
+                    <button class="btn-secondary logout-header-btn" id="logoutBtn" title="Logout Admin">
+                        <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -101,39 +103,44 @@
 
         <!-- FILTER & SEARCH BAR -->
         <section class="filter-card">
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Search clothing products by title or description...">
-            </div>
-            
-            <div class="filter-group">
-                <span class="filter-label">Category / Role:</span>
-                <select class="filter-select" id="categoryFilter">
-                    <option value="all">All Categories</option>
-                    <option value="Men's Formal">Men's Formal</option>
-                    <option value="Hoodies & Sweats">Hoodies &amp; Sweats</option>
-                    <option value="Women's Casual">Women's Casual</option>
-                    <option value="Women's Dresses">Women's Dresses</option>
-                    <option value="Women's Evening">Women's Evening</option>
-                    <option value="Men's Shirts">Men's Shirts</option>
-                </select>
-
-                <span class="filter-label">Status:</span>
-                <select class="filter-select" id="statusFilter">
-                    <option value="all">All Statuses</option>
-                    <option value="In Stock">In Stock / Active</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Packed">Packed</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Nearest Hub">Nearest Hub</option>
-                    <option value="Out for Delivery">Out for Delivery</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
-
+            <div class="search-top-row">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search by title or description...">
+                </div>
                 <button class="btn-icon" id="refreshBtn" title="Refresh Data">
                     <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-select-wrapper">
+                    <span class="filter-label">Category:</span>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="Men's Formal">Men's Formal</option>
+                        <option value="Hoodies & Sweats">Hoodies &amp; Sweats</option>
+                        <option value="Women's Casual">Women's Casual</option>
+                        <option value="Women's Dresses">Women's Dresses</option>
+                        <option value="Women's Evening">Women's Evening</option>
+                        <option value="Men's Shirts">Men's Shirts</option>
+                    </select>
+                </div>
+
+                <div class="filter-select-wrapper">
+                    <span class="filter-label">Status:</span>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="In Stock">In Stock / Active</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Packed">Packed</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Nearest Hub">Nearest Hub</option>
+                        <option value="Out for Delivery">Out for Delivery</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
             </div>
         </section>
 

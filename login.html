@@ -49,32 +49,85 @@
         margin-top: 24px;
     }
 
+    @keyframes cardFadeSlideUp {
+        0% {
+            opacity: 0;
+            transform: translateY(18px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes shimmerGradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes pulseRingNavy {
+        0% {
+            box-shadow: 0 0 0 0 rgba(15, 23, 42, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 14px rgba(15, 23, 42, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(15, 23, 42, 0);
+        }
+    }
+
+    @keyframes pulseRingGreen {
+        0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 14px rgba(16, 185, 129, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+    }
+
+    @keyframes badgeGlowNavy {
+        0%, 100% { box-shadow: 0 0 8px rgba(15, 23, 42, 0.15); }
+        50% { box-shadow: 0 0 16px rgba(15, 23, 42, 0.35); }
+    }
+
     .stepper-container-box {
         position: relative;
-        padding: 30px 10px 10px 10px;
-        margin: 35px 0 25px 0;
+        padding: 32px 24px 24px 24px;
+        margin: 25px 0;
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        animation: cardFadeSlideUp 0.5s ease-out forwards;
     }
 
     .stepper-progress-bg {
         position: absolute;
-        top: 55px;
+        top: 60px;
         left: 8.333%;
         width: 83.333%;
-        height: 6px;
-        background: #334155;
+        height: 7px;
+        background: #E2E8F0;
         border-radius: 4px;
         z-index: 1;
     }
 
     .stepper-progress-bar {
         position: absolute;
-        top: 55px;
+        top: 60px;
         left: 8.333%;
-        height: 6px;
-        background: linear-gradient(90deg, #10B981 0%, #E5C158 100%);
+        height: 7px;
+        background: linear-gradient(90deg, #10B981 0%, #0F172A 50%, #1E3A8A 100%);
+        background-size: 200% 100%;
+        animation: shimmerGradient 3s linear infinite;
         border-radius: 4px;
         z-index: 2;
-        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .stepper-steps-flex {
@@ -95,38 +148,42 @@
     }
 
     .stepper-node-circle {
-        width: 56px;
-        height: 56px;
+        width: 58px;
+        height: 58px;
         border-radius: 50%;
-        background: #1E293B;
-        border: 3px solid #475569;
-        color: #94A3B8;
+        background: #F8FAFC;
+        border: 2.5px solid #CBD5E1;
+        color: #475569;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
+        font-size: 22px;
         margin-bottom: 12px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .stepper-step-item:hover .stepper-node-circle {
+        transform: translateY(-3px) scale(1.06);
     }
 
     .stepper-step-item.done .stepper-node-circle {
-        background: #10B981;
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
         border-color: #34D399;
         color: #FFFFFF;
-        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
     }
 
     .stepper-step-item.active .stepper-node-circle {
-        background: #E5C158;
-        border-color: #FDE047;
-        color: #0F172A;
-        animation: pulseRingGold 1.8s infinite;
+        background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%);
+        border-color: #334155;
+        color: #FFFFFF;
+        animation: pulseRingNavy 1.8s infinite;
         transform: scale(1.12);
     }
 
     .stepper-step-item.active.delivered-stage .stepper-node-circle {
-        background: #10B981;
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
         border-color: #34D399;
         color: #FFFFFF;
         animation: pulseRingGreen 1.8s infinite;
@@ -134,53 +191,55 @@
 
     .stepper-title-text {
         font-family: 'Outfit', sans-serif;
-        font-size: 14px;
-        font-weight: 800;
-        color: #94A3B8;
-        margin-bottom: 5px;
+        font-size: 15px;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 6px;
     }
 
     .stepper-step-item.done .stepper-title-text {
-        color: #34D399;
+        color: #059669;
     }
 
     .stepper-step-item.active .stepper-title-text {
-        color: #FDE047;
-        font-size: 15px;
+        color: #0F172A;
+        font-size: 16px;
+        font-weight: 800;
     }
 
     .stepper-status-pill {
-        font-size: 11.5px;
-        font-weight: 800;
-        padding: 3px 12px;
-        border-radius: 14px;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 14px;
+        border-radius: 16px;
         display: inline-block;
+        letter-spacing: 0.3px;
     }
 
     .stepper-status-pill.done {
-        background: rgba(16, 185, 129, 0.18);
-        color: #34D399;
-        border: 1px solid rgba(16, 185, 129, 0.4);
+        background: #ECFDF5;
+        color: #059669;
+        border: 1px solid #A7F3D0;
     }
 
     .stepper-status-pill.active {
-        background: rgba(229, 193, 88, 0.2);
-        color: #FDE047;
-        border: 1px solid rgba(229, 193, 88, 0.6);
+        background: #F1F5F9;
+        color: #0F172A;
+        border: 1.5px solid #0F172A;
     }
 
     .stepper-status-pill.pending {
-        background: rgba(100, 116, 139, 0.15);
+        background: #F1F5F9;
         color: #64748B;
-        border: 1px solid rgba(100, 116, 139, 0.3);
+        border: 1px solid #E2E8F0;
     }
 
     .order-selector-card {
-        background: #1E293B;
-        border: 1px solid #334155;
-        border-radius: 12px;
-        padding: 20px 24px;
-        margin-bottom: 30px;
+        background: #FFFFFF;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 14px;
+        padding: 22px 26px;
+        margin-bottom: 25px;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -188,16 +247,17 @@
         gap: 16px;
         width: 100%;
         box-sizing: border-box;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
     .order-selector-card select#user-order-select {
-        background: #0F172A;
-        color: #E5C158;
-        border: 1px solid #E5C158;
-        border-radius: 6px;
-        padding: 8px 14px;
-        font-size: 14px;
-        font-weight: 600;
+        background: #FFFFFF;
+        color: #0F172A;
+        border: 2px solid #0F172A;
+        border-radius: 8px;
+        padding: 11px 18px;
+        font-size: 16px;
+        font-weight: 700;
         cursor: pointer;
         outline: none;
         margin-top: 4px;
@@ -207,6 +267,14 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+    }
+
+    .order-selector-card select#user-order-select option {
+        background: #FFFFFF;
+        color: #0F172A;
+        font-size: 15px;
+        font-weight: 700;
     }
 
     .order-meta-banner {
@@ -215,9 +283,9 @@
         align-items: center;
         justify-content: space-between;
         gap: 16px;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #334155;
+        margin-bottom: 32px;
+        padding-bottom: 24px;
+        border-bottom: 1.5px solid #E2E8F0;
     }
 
     .stepper-step-info {
@@ -228,14 +296,15 @@
     }
 
     .order-logistics-card {
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid #334155;
-        border-radius: 10px;
-        padding: 18px 20px;
-        margin-top: 25px;
+        background: #F8FAFC;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 22px 24px;
+        margin-top: 32px;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 16px;
+        gap: 20px;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
     }
 
     @media (max-width: 768px) {
@@ -246,34 +315,46 @@
             flex-direction: column !important;
             align-items: stretch !important;
             padding: 16px 14px !important;
-            gap: 14px !important;
+            gap: 12px !important;
             width: 100% !important;
         }
         .order-selector-card > div {
             width: 100% !important;
         }
         .order-selector-card select#user-order-select {
-            font-size: 12.5px !important;
-            padding: 8px 10px !important;
+            font-size: 14.5px !important;
+            padding: 10px 14px !important;
             width: 100% !important;
             max-width: 100% !important;
         }
         .order-meta-banner {
             flex-direction: column !important;
-            align-items: flex-start !important;
+            align-items: stretch !important;
             gap: 12px !important;
         }
         .order-meta-banner > div {
             width: 100% !important;
             text-align: left !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+        }
+        .order-id-highlight,
+        .customer-info-box,
+        .product-info-box,
+        .delivery-status-badge {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            justify-content: flex-start !important;
         }
         .stepper-container-box {
-            padding: 18px 12px !important;
+            padding: 20px 14px !important;
             margin: 20px 0 15px 0 !important;
         }
         .stepper-steps-flex {
             flex-direction: column !important;
-            gap: 18px !important;
+            gap: 20px !important;
             align-items: flex-start !important;
             position: relative !important;
             padding-left: 6px !important;
@@ -283,12 +364,18 @@
             position: absolute;
             top: 20px;
             bottom: 20px;
-            left: 27px;
+            left: 28px;
             width: 3px;
-            background: #334155;
+            background: #E2E8F0;
             z-index: 1;
             border-radius: 2px;
         }
+        .order-logistics-card {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+            padding: 16px 18px !important;
+        }
+    }
         .stepper-progress-bg, .stepper-progress-bar {
             display: none !important;
         }
@@ -668,31 +755,24 @@
         </section>
 
         <!-- REAL-TIME CUSTOMER ORDER TRACKING SECTION -->
-        <section class="section order-tracking-section" id="customer-order-tracking" style="padding: 40px 0 60px; background: #0F172A; color: #F8FAFC;">
+        <section class="section order-tracking-section" id="customer-order-tracking" style="padding: 40px 0 60px; background: #F8FAFC; color: #0F172A;">
             <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
                 
                 <div class="tracking-header" style="text-align: center; margin-bottom: 35px;">
-                    <span class="visual-badge" style="background: rgba(229,193,88,0.15); color: #E5C158; border: 1px solid #E5C158; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 1px;">MY ORDERS & LIVE TRACKING</span>
-                    <h2 style="font-family: 'Cinzel', serif; font-size: 28px; color: #FFF; margin: 12px 0 6px;">Real-Time Order Progress Tracker</h2>
-                    <p style="color: #94A3B8; font-size: 14px;">Monitor your custom design orders from crafting & quality check to final delivery.</p>
+                    <span class="visual-badge" style="background: #F1F5F9; color: #0F172A; border: 1.5px solid #0F172A; padding: 5px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; letter-spacing: 1px;">MY ORDERS & LIVE TRACKING</span>
+                    <h2 style="font-family: 'Cinzel', serif; font-size: 30px; color: #0F172A; margin: 12px 0 6px;">Real-Time Order Progress Tracker</h2>
+                    <p style="color: #334155; font-size: 15px;">Monitor your custom design orders from crafting & quality check to final delivery.</p>
                 </div>
 
                 <div class="order-selector-card">
                     <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; width: 100%;">
-                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="#E5C158" fill="none" stroke-width="2" style="flex-shrink: 0;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="#0F172A" fill="none" stroke-width="2" style="flex-shrink: 0;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <div style="flex: 1; min-width: 0; width: 100%;">
-                            <span style="display: block; font-size: 12px; color: #94A3B8; text-transform: uppercase; font-weight: 600;">Select Active Order</span>
+                            <span style="display: block; font-size: 13px; color: #0F172A; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Select Active Order</span>
                             <select id="user-order-select" onchange="loadSelectedOrderTracking()">
                                 <option value="">Loading your active orders...</option>
                             </select>
                         </div>
-                    </div>
-
-                    <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
-                        <button type="button" onclick="refreshOrderTracking()" style="background: rgba(229,193,88,0.15); color: #E5C158; border: 1px solid #E5C158; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;">
-                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                            Refresh Status
-                        </button>
                     </div>
                 </div>
 
@@ -1127,13 +1207,11 @@
 
             const currentSelectedVal = selectEl.value;
 
-            // Populate dropdown with exact order ref numbers
+            // Populate dropdown with Order Number and Name only
             selectEl.innerHTML = userOrdersList.map(ord => {
                 const num = ord.order_number || ('ORD-' + ord.id);
-                const price = ord.total_amount || ord.total_price || 0;
-                const status = ord.order_status || ord.status || 'Pending';
-                const itemStr = ord.product_name ? ` (${ord.product_name})` : '';
-                return `<option value="${ord.id}">Order #${num}${itemStr} - ₹${Number(price).toLocaleString('en-IN')} [${status}]</option>`;
+                const name = ord.customer_name || ord.product_name || 'Valued Client';
+                return `<option value="${ord.id}">Order #${num} - ${name}</option>`;
             }).join('');
 
             // Restore previous selection if still available, else default to first
@@ -1173,30 +1251,54 @@
             if (!displayContainer || !order) return;
 
             const stages = [
-                { key: 'Pending', label: 'Order Placed' },
-                { key: 'Packed', label: 'Packed' },
-                { key: 'Shipped', label: 'Shipped' },
-                { key: 'Nearest Hub', label: 'Nearest Hub' },
-                { key: 'Out for Delivery', label: 'Out for Delivery' },
-                { key: 'Delivered', label: 'Delivered' }
+                { 
+                    key: 'Pending', 
+                    label: 'Order Placed', 
+                    icon: `<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>`
+                },
+                { 
+                    key: 'Packed', 
+                    label: 'Packed & Ready', 
+                    icon: `<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`
+                },
+                { 
+                    key: 'Shipped', 
+                    label: 'In Transit', 
+                    icon: `<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>`
+                },
+                { 
+                    key: 'Nearest Hub', 
+                    label: 'Arrived at Hub', 
+                    icon: `<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`
+                },
+                { 
+                    key: 'Out for Delivery', 
+                    label: 'Out for Delivery', 
+                    icon: `<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`
+                },
+                { 
+                    key: 'Delivered', 
+                    label: 'Delivered', 
+                    icon: `<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`
+                }
             ];
 
             const currentStatus = order.order_status || order.status || 'Pending';
             const orderNum = order.order_number || ('ORD-' + order.id);
             const customerName = order.customer_name || 'Valued Client';
-            const customerEmail = order.customer_email ? ` (${order.customer_email})` : '';
+            const customerEmail = order.customer_email || '';
             const totalPrice = order.total_amount || order.total_price || 0;
-            const productName = order.product_name ? ` &bull; ${order.product_name}` : '';
+            const productName = order.product_name || 'Custom AR Garment';
             const itemSize = order.size ? ` (Size: ${order.size})` : '';
 
             if (currentStatus === 'Cancelled') {
                 displayContainer.innerHTML = `
-                    <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid #EF4444; border-radius: 12px; padding: 24px; color: #FCA5A5;">
+                    <div style="background: #FEF2F2; border: 1px solid #FECACA; border-radius: 14px; padding: 24px; color: #991B1B; animation: cardFadeSlideUp 0.4s ease-out;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                            <svg viewBox="0 0 24 24" width="28" height="28" stroke="#EF4444" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                            <h3 style="font-size: 20px; font-weight: 700; color: #EF4444; margin: 0;">Order #${orderNum} - CANCELLED</h3>
+                            <svg viewBox="0 0 24 24" width="28" height="28" stroke="#DC2626" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            <h3 style="font-size: 20px; font-weight: 700; color: #DC2626; margin: 0;">Order #${orderNum} - CANCELLED</h3>
                         </div>
-                        <p style="font-size: 14px; color: #CBD5E1; margin: 0;">This order has been cancelled. For questions regarding refunds or re-ordering, please contact customer support.</p>
+                        <p style="font-size: 14px; color: #475569; margin: 0;">This order has been cancelled. For questions regarding refunds or re-ordering, please contact customer support.</p>
                     </div>
                 `;
                 return;
@@ -1222,26 +1324,50 @@
 
             const courierName = order.courier_name || 'BlueDart Express';
             const trackingAwb = order.tracking_awb || 'AWB-98421074';
+            const initialLetter = customerName.charAt(0).toUpperCase();
 
             displayContainer.innerHTML = `
                 <div class="stepper-container-box">
                     
                     <!-- Order Meta Banner -->
                     <div class="order-meta-banner">
-                        <div>
-                            <h3 style="font-size: 20px; font-weight: 700; color: #FFF; margin: 0 0 4px;">
-                                Order #${orderNum}<span style="color: #E5C158;">${productName}${itemSize}</span>
-                            </h3>
-                            <p style="color: #94A3B8; font-size: 13px; margin: 0;">
-                                Customer: <strong style="color: #F1F5F9;">${customerName}</strong>${customerEmail} &bull; 
-                                Total: <strong style="color: #E5C158;">₹${Number(totalPrice).toLocaleString('en-IN')}</strong>
-                            </p>
+                        <!-- Order ID Card & Customer Name -->
+                        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+                            <div class="order-id-highlight" style="background: #F1F5F9; border: 2px solid #0F172A; padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 10px; animation: badgeGlowNavy 3s infinite;">
+                                <svg viewBox="0 0 24 24" width="22" height="22" stroke="#0F172A" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <div>
+                                    <span style="display: block; font-size: 11px; color: #0F172A; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">ORDER ID</span>
+                                    <strong style="font-size: 19px; color: #0F172A; font-family: 'Cinzel', serif; letter-spacing: 0.5px;">#${orderNum}</strong>
+                                </div>
+                            </div>
+
+                            <div class="customer-info-box" style="display: flex; align-items: center; gap: 12px; background: #F8FAFC; border: 1.5px solid #E2E8F0; padding: 10px 18px; border-radius: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #0F172A, #1E3A8A); display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: 800; font-size: 17px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);">
+                                    ${initialLetter}
+                                </div>
+                                <div>
+                                    <span style="display: block; font-size: 11px; color: #0F172A; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">CUSTOMER</span>
+                                    <h4 style="font-size: 16px; font-weight: 800; color: #0F172A; margin: 0;">
+                                        ${customerName}
+                                        ${customerEmail ? `<span style="font-size: 13px; font-weight: 500; color: #475569; margin-left: 4px;">(${customerEmail})</span>` : ''}
+                                    </h4>
+                                </div>
+                            </div>
                         </div>
 
-                        <div>
-                            <span style="display: inline-block; padding: 4px 12px; background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 20px; font-size: 13px; font-weight: 700;">
-                                📅 ${deliveryText}
-                            </span>
+                        <!-- Product info & Estimated Delivery Badge -->
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <div class="product-info-box" style="background: #F8FAFC; border: 1.5px solid #E2E8F0; padding: 9px 16px; border-radius: 10px; font-size: 15px; color: #0F172A;">
+                                <span style="color: #475569; font-weight: 600;">Product:</span> 
+                                <strong style="color: #0F172A; font-weight: 800;">${productName}</strong>
+                                ${itemSize ? `<span style="color: #0F172A; font-weight: 800;"> ${itemSize}</span>` : ''}
+                                &bull; <strong style="color: #0F172A; font-weight: 800; font-size: 16px;">₹${Number(totalPrice).toLocaleString('en-IN')}</strong>
+                            </div>
+
+                            <div class="delivery-status-badge" style="padding: 9px 18px; background: #ECFDF5; color: #059669; border: 1.5px solid #A7F3D0; border-radius: 20px; font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 6px;">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                ${deliveryText}
+                            </div>
                         </div>
                     </div>
 
@@ -1253,29 +1379,31 @@
                         <div class="stepper-steps-flex">
                             ${stages.map((stg, idx) => {
                                 let stepState = 'pending';
-                                let badgeText = '(Pending)';
-                                let nodeContent = idx + 1;
+                                let badgeText = 'Pending';
+                                let nodeIcon = stg.icon;
                                 
                                 if (idx < currentIdx) {
                                     stepState = 'done';
-                                    badgeText = '(Done)';
-                                    nodeContent = '✓';
+                                    badgeText = 'Completed';
+                                    nodeIcon = `<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
                                 } else if (idx === currentIdx) {
                                     if (currentStatus === 'Delivered') {
                                         stepState = 'done';
-                                        badgeText = '(Done)';
-                                        nodeContent = '✓';
+                                        badgeText = 'Delivered';
+                                        nodeIcon = `<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
                                     } else {
                                         stepState = 'active';
-                                        badgeText = '(Active)';
-                                        nodeContent = idx + 1;
+                                        badgeText = 'In Progress';
+                                        nodeIcon = stg.icon;
                                     }
                                 }
 
+                                const isDeliveredStageClass = (stepState === 'active' && currentStatus === 'Delivered') ? 'delivered-stage' : '';
+
                                 return `
-                                    <div class="stepper-step-item ${stepState}">
+                                    <div class="stepper-step-item ${stepState} ${isDeliveredStageClass}">
                                         <div class="stepper-node-circle">
-                                            ${nodeContent}
+                                            ${nodeIcon}
                                         </div>
                                         <div class="stepper-step-info">
                                             <div class="stepper-title-text">${stg.label}</div>
@@ -1292,23 +1420,23 @@
                     <!-- Courier & Logistics Details Card -->
                     <div class="order-logistics-card">
                         <div>
-                            <span style="font-size: 11px; color: #94A3B8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Logistics Partner</span>
-                            <p style="font-size: 14px; font-weight: 600; color: #F8FAFC; margin: 4px 0 0; display: flex; align-items: center; gap: 6px;">
+                            <span style="font-size: 12px; color: #0F172A; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Logistics Partner</span>
+                            <p style="font-size: 15px; font-weight: 800; color: #0F172A; margin: 4px 0 0; display: flex; align-items: center; gap: 6px;">
                                 🚚 ${courierName}
                             </p>
                         </div>
 
                         <div>
-                            <span style="font-size: 11px; color: #94A3B8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Tracking AWB Number</span>
-                            <p style="font-size: 14px; font-weight: 700; color: #E5C158; margin: 4px 0 0; font-family: monospace;">
-                                ${trackingAwb}
+                            <span style="font-size: 12px; color: #0F172A; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Tracking AWB Number</span>
+                            <p style="font-size: 16px; font-weight: 800; color: #0F172A; margin: 4px 0 0; font-family: monospace; letter-spacing: 0.5px;">
+                                📦 ${trackingAwb}
                             </p>
                         </div>
 
                         <div>
-                            <span style="font-size: 11px; color: #94A3B8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Delivery Destination</span>
-                            <p style="font-size: 13px; color: #CBD5E1; margin: 4px 0 0;">
-                                ${order.shipping_address || 'Registered Shipping Address'}
+                            <span style="font-size: 12px; color: #0F172A; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Delivery Destination</span>
+                            <p style="font-size: 14.5px; color: #334155; font-weight: 700; margin: 4px 0 0; display: flex; align-items: center; gap: 4px;">
+                                📍 ${order.shipping_address || 'Registered Shipping Address'}
                             </p>
                         </div>
                     </div>

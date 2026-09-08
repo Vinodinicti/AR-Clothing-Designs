@@ -293,6 +293,157 @@
                 padding: 13px;
                 font-size: 13.5px;
             }
+
+            .footer::after {
+                display: none !important;
+            }
+
+            .footer-content {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 16px 12px !important;
+                padding: 20px 14px 14px !important;
+                text-align: left !important;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                width: 100% !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+                padding-bottom: 12px !important;
+                margin-bottom: 2px !important;
+            }
+
+            .footer-logo-img {
+                height: 28px !important;
+                max-width: 34px !important;
+                margin: 0 auto 6px !important;
+            }
+
+            .footer h3 {
+                font-size: 1.05rem !important;
+                margin-bottom: 4px !important;
+                letter-spacing: -0.3px !important;
+                text-align: center !important;
+            }
+
+            .footer-brand p {
+                font-size: 0.78rem !important;
+                line-height: 1.35 !important;
+                margin-bottom: 4px !important;
+                max-width: 100% !important;
+                color: #CBD5E1 !important;
+                text-align: center !important;
+            }
+
+            .footer-badge {
+                margin: 4px auto 0 !important;
+                display: inline-block !important;
+                text-align: center !important;
+                font-size: 0.66rem !important;
+                padding: 3px 8px !important;
+                border-radius: 12px !important;
+                border-width: 1px !important;
+            }
+
+            .footer-links {
+                grid-column: 1 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                text-align: left !important;
+                width: 100% !important;
+                gap: 3px !important;
+            }
+
+            .footer-links h4 {
+                font-size: 0.8rem !important;
+                margin-bottom: 6px !important;
+                text-align: left !important;
+                color: #CBD5E1 !important;
+                letter-spacing: 0.5px !important;
+            }
+
+            .footer-links a {
+                justify-content: flex-start !important;
+                font-size: 0.76rem !important;
+                padding: 2px 0 !important;
+                color: #E2E8F0 !important;
+                text-align: left !important;
+            }
+
+            .footer-contact {
+                grid-column: 2 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                text-align: left !important;
+                width: 100% !important;
+                gap: 3px !important;
+            }
+
+            .footer-contact h4 {
+                font-size: 0.8rem !important;
+                margin-bottom: 6px !important;
+                text-align: left !important;
+                color: #CBD5E1 !important;
+                letter-spacing: 0.5px !important;
+            }
+
+            .footer-contact p {
+                font-size: 0.75rem !important;
+                line-height: 1.35 !important;
+                margin-bottom: 4px !important;
+                color: #CBD5E1 !important;
+                text-align: left !important;
+                word-break: break-word !important;
+            }
+
+            .footer-contact strong {
+                display: block !important;
+                color: #FFFFFF !important;
+                font-size: 0.74rem !important;
+                margin-bottom: 1px !important;
+            }
+
+            .footer-bottom {
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                gap: 6px !important;
+                padding: 10px 12px !important;
+                background: rgba(10, 15, 26, 0.98) !important;
+            }
+
+            .footer-bottom p {
+                text-align: center !important;
+                width: 100% !important;
+                font-size: 0.7rem !important;
+                margin: 0 !important;
+                color: #94A3B8 !important;
+            }
+
+            .footer-privacy-btn {
+                margin: 0 auto !important;
+                display: inline-block !important;
+                font-size: 0.65rem !important;
+                padding: 4px 10px !important;
+                border-radius: 20px !important;
+                letter-spacing: 0.3px !important;
+            }
+
+            .logo,
+            .logo a {
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                font-size: clamp(0.72rem, 3.2vw, 0.88rem) !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -321,12 +472,6 @@
             <img src="ar-logo.png" alt="AR Clothing & Designs Logo" class="header-logo-img" onerror="this.onerror=null; this.src='logo.png';">
             AR CLOTHING & DESIGNS
         </a>
-
-        <button class="mobile-nav-toggle" aria-label="Toggle Menu" title="Toggle Menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
 
         <nav class="navbar">
             <a href="index.html">Home</a>
@@ -447,7 +592,8 @@
             event.preventDefault();
             const email = document.getElementById('admin-email').value.trim();
             const password = document.getElementById('admin-password').value;
-            const role = document.getElementById('admin-role').value;
+            const roleEl = document.getElementById('admin-role');
+            const role = roleEl ? roleEl.value : 'Store Administrator';
 
             let loginSuccess = false;
             let token = null;

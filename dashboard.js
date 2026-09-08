@@ -205,9 +205,9 @@ function switchTab(tab) {
 
     if (tab === 'items') {
         tabItems.classList.add('active');
-        addBtnText.textContent = 'Add Clothing Product';
+        addBtnText.textContent = 'Create Product';
         openAddModalBtn.style.display = 'flex';
-        searchInput.placeholder = 'Search clothing products by title or description...';
+        searchInput.placeholder = 'Search products by title or description...';
     } else if (tab === 'orders') {
         tabOrders.classList.add('active');
         mainTableCard.classList.add('unique-orders-card');
@@ -499,7 +499,10 @@ function renderItemsRows(items) {
                 <td style="white-space: nowrap;"><span class="category-pill">${escapeHtml(item.category)}</span></td>
                 <td class="item-price" style="white-space: nowrap;">₹${parseFloat(item.price).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
                 <td style="white-space: nowrap;">
-                    <span class="status-badge status-${item.status.toLowerCase().replace(/\s+/g, '-')}">${item.status}</span>
+                    <select onchange="updateItemStockStatus('${item.id}', this.value)" class="styled-select" style="padding: 6px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 700; cursor: pointer; ${item.status && item.status.toLowerCase().includes('out') ? 'background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5;' : 'background: #D1FAE5; color: #065F46; border: 1px solid #6EE7B7;'}">
+                        <option value="In Stock" ${!item.status || item.status.toLowerCase() === 'in stock' ? 'selected' : ''}>In Stock</option>
+                        <option value="Out of Stock" ${item.status && item.status.toLowerCase().includes('out') ? 'selected' : ''}>Out of Stock</option>
+                    </select>
                 </td>
                 <td style="max-width: 260px; color: var(--text-secondary);">${escapeHtml(item.description || '-')}</td>
                 <td style="white-space: nowrap;">
@@ -516,6 +519,55 @@ function renderItemsRows(items) {
         `;
     }).join('');
 }
+
+window.updateItemStockStatus = async function(id, newStatus) {
+    try {
+        const item = itemsData.find(i => String(i.id) === String(id));
+        if (item) {
+            item.status = newStatus;
+        }
+
+        await fetch(`${API_BASE_URL}/items/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+        });
+    } catch (e) {
+        console.warn('Backend API update info:', e);
+    }
+
+    let localItems = [];
+    try {
+        const localStr = localStorage.getItem('ar_custom_items');
+        if (localStr) localItems = JSON.parse(localStr);
+    } catch (e) {}
+
+    let foundLocal = false;
+    localItems = localItems.map(item => {
+        if (String(item.id) === String(id)) {
+            foundLocal = true;
+            return { ...item, status: newStatus };
+        }
+        return item;
+    });
+
+    if (!foundLocal) {
+        const existingItem = itemsData.find(i => String(i.id) === String(id));
+        if (existingItem) {
+            localItems.unshift({ ...existingItem, status: newStatus });
+        }
+    }
+
+    try {
+        localStorage.setItem('ar_custom_items', JSON.stringify(localItems));
+    } catch (e) {}
+
+    if (typeof showToastNotification === 'function') {
+        showToastNotification(`Product Status updated to "${newStatus}"!`);
+    }
+
+    refreshDashboard();
+};
 
 function renderOrdersRows(orders) {
     if (orders.length === 0) {

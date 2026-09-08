@@ -156,6 +156,7 @@ async function fetchLiveProducts() {
                 price: parseFloat(item.price) || 2999,
                 originalPrice: item.original_price ? parseFloat(item.original_price) : Math.round((parseFloat(item.price) || 2999) * 1.25),
                 image: item.image || 'images/designs/design-1.jpg',
+                status: item.status || 'In Stock',
                 tag: item.tag || '',
                 description: item.description || '',
                 sizes: parsedSizes
@@ -181,9 +182,18 @@ function renderHomePageDesigns() {
     designGrid.innerHTML = PRODUCTS_DATA.slice(0, 6).map(item => {
         const itemCategory = (item.categoryLabel || item.category || 'Collection').toUpperCase();
         const isWishlisted = wishlist ? wishlist.includes(item.id) : false;
+        const isOutOfStock = item.status && item.status.toLowerCase().includes('out');
+
+        const cartBtnHtml = isOutOfStock
+            ? `<button class="btn-card-cart add-cart-btn disabled" data-id="${escapeHtml(item.id)}" disabled style="opacity: 0.65; cursor: not-allowed; background: #64748B; color: #FFF; border: none;">Out of Stock</button>`
+            : `<button class="btn-card-cart add-cart-btn" data-id="${escapeHtml(item.id)}">Add to Cart</button>`;
+
+        const buyBtnHtml = isOutOfStock
+            ? `<button class="btn-card-buy buy-now-btn disabled" data-id="${escapeHtml(item.id)}" disabled style="opacity: 0.65; cursor: not-allowed; background: #475569; color: #FFF; border: none;">Unavailable</button>`
+            : `<button class="btn-card-buy buy-now-btn" data-id="${escapeHtml(item.id)}">Buy Now</button>`;
 
         return `
-            <div class="design-card" data-id="${escapeHtml(item.id)}">
+            <div class="design-card ${isOutOfStock ? 'out-of-stock-card' : ''}" data-id="${escapeHtml(item.id)}">
                 <div class="design-image">
                     <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" onerror="this.src='hero.jpg';">
                     <button class="wishlist-btn-card ${isWishlisted ? 'active' : ''}" data-id="${escapeHtml(item.id)}" aria-label="Wishlist" title="${isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}">
@@ -196,8 +206,8 @@ function renderHomePageDesigns() {
                     <div class="collection-bottom">
                         <span class="collection-price">₹${parseFloat(item.price).toLocaleString('en-IN')}</span>
                         <div class="card-actions-row">
-                            <button class="btn-card-cart add-cart-btn" data-id="${escapeHtml(item.id)}">Add to Cart</button>
-                            <button class="btn-card-buy buy-now-btn" data-id="${escapeHtml(item.id)}">Buy Now</button>
+                            ${cartBtnHtml}
+                            ${buyBtnHtml}
                         </div>
                     </div>
                 </div>
@@ -223,9 +233,22 @@ function renderDesignsPage() {
         const sizesHtml = sizesArr.map(s => `<span class="size-pill">${escapeHtml(s)}</span>`).join('');
         const isWishlisted = wishlist ? wishlist.includes(item.id) : false;
         const origPrice = item.originalPrice ? `₹${item.originalPrice.toLocaleString('en-IN')}` : '';
+        const isOutOfStock = item.status && item.status.toLowerCase().includes('out');
+
+        const stockBadgeHtml = isOutOfStock
+            ? `<span class="stock-status out-of-stock" style="color: #EF4444; background: rgba(239,68,68,0.12); padding: 3px 10px; border-radius: 12px; font-weight: 800; font-size: 11px; display: inline-flex; align-items: center; gap: 4px;">● Out of Stock</span>`
+            : `<span class="stock-status in-stock" style="color: #10B981; background: rgba(16,185,129,0.12); padding: 3px 10px; border-radius: 12px; font-weight: 800; font-size: 11px; display: inline-flex; align-items: center; gap: 4px;">● In Stock</span>`;
+
+        const cartBtnHtml = isOutOfStock
+            ? `<button class="btn-card-cart add-cart-btn disabled" data-id="${escapeHtml(item.id)}" disabled style="opacity: 0.65; cursor: not-allowed; background: #64748B; color: #FFF; border: none;">Out of Stock</button>`
+            : `<button class="btn-card-cart add-cart-btn" data-id="${escapeHtml(item.id)}">Add to Cart</button>`;
+
+        const buyBtnHtml = isOutOfStock
+            ? `<button class="btn-card-buy buy-now-btn disabled" data-id="${escapeHtml(item.id)}" disabled style="opacity: 0.65; cursor: not-allowed; background: #475569; color: #FFF; border: none;">Unavailable</button>`
+            : `<button class="btn-card-buy buy-now-btn" data-id="${escapeHtml(item.id)}">Buy Now</button>`;
 
         return `
-            <div class="collection-card ${isVisible ? 'show' : ''}" data-category="${escapeHtml(itemCategory)}" data-id="${escapeHtml(item.id)}" style="${isVisible ? '' : 'display: none;'}">
+            <div class="collection-card ${isVisible ? 'show' : ''} ${isOutOfStock ? 'out-of-stock-card' : ''}" data-category="${escapeHtml(itemCategory)}" data-id="${escapeHtml(item.id)}" style="${isVisible ? '' : 'display: none;'}">
                 <div class="collection-image">
                     <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" onerror="this.src='hero.jpg';">
                     ${tagHtml}
@@ -236,7 +259,7 @@ function renderDesignsPage() {
                 <div class="collection-info">
                     <div class="card-meta-top">
                         <span class="design-category">${escapeHtml((item.categoryLabel || itemCategory).toUpperCase())}</span>
-                        <span class="stock-status in-stock">● In Stock</span>
+                        ${stockBadgeHtml}
                     </div>
                     <h3 class="product-title">${escapeHtml(item.name)}</h3>
                     <p class="collection-desc">${escapeHtml(item.description || '')}</p>
@@ -250,8 +273,8 @@ function renderDesignsPage() {
                             ${origPrice ? `<span class="price-original">${origPrice}</span>` : ''}
                         </div>
                         <div class="card-actions-row">
-                            <button class="btn-card-cart add-cart-btn" data-id="${escapeHtml(item.id)}">Add to Cart</button>
-                            <button class="btn-card-buy buy-now-btn" data-id="${escapeHtml(item.id)}">Buy Now</button>
+                            ${cartBtnHtml}
+                            ${buyBtnHtml}
                         </div>
                     </div>
                 </div>
@@ -2651,7 +2674,135 @@ function toggleHeroPlayPause() {
 }
 
 /* =========================================================
-   13. INITIALIZATION ON DOM READY
+   14. HERO TYPEWRITER TYPING EFFECT (ALL PAGES & MOBILE)
+========================================================= */
+function injectTypewriterStyles() {
+    if (document.getElementById('typewriter-dynamic-styles')) return;
+    const styleEl = document.createElement('style');
+    styleEl.id = 'typewriter-dynamic-styles';
+    styleEl.innerHTML = `
+        @keyframes typewriterBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .typewriter-cursor {
+            display: inline-block;
+            font-weight: 300;
+            margin-left: 3px;
+            color: #E5C158;
+            animation: typewriterBlink 0.75s infinite;
+            vertical-align: baseline;
+        }
+        .typewriter-line-container {
+            display: inline;
+        }
+        @media (max-width: 768px) {
+            .typewriter-cursor {
+                margin-left: 2px;
+            }
+        }
+    `;
+    document.head.appendChild(styleEl);
+}
+
+function initHeroTypewriterEffect() {
+    injectTypewriterStyles();
+
+    const heroHeadings = document.querySelectorAll('.hero h1, .index-hero h1, .page-hero-content h1, .hero-content h1, h1.typewriter-heading');
+    if (!heroHeadings.length) return;
+
+    heroHeadings.forEach(h1 => {
+        if (h1.dataset.typewriterInitialized === 'true') return;
+        h1.dataset.typewriterInitialized = 'true';
+
+        const rawHTML = h1.innerHTML.trim();
+        if (!rawHTML) return;
+
+        // Split by <br> or <br/> or \n
+        const rawLines = rawHTML.split(/<br\s*\/?>/i).map(l => l.replace(/<[^>]*>/g, '').trim()).filter(Boolean);
+        if (!rawLines.length) return;
+
+        // Lock minimum height to avoid vertical jitter during typing
+        const initialHeight = h1.offsetHeight;
+        if (initialHeight > 0) {
+            h1.style.minHeight = initialHeight + 'px';
+        }
+
+        h1.innerHTML = `<span class="typewriter-line-container"></span><span class="typewriter-cursor">|</span>`;
+        const container = h1.querySelector('.typewriter-line-container');
+
+        let currentLineIdx = 0;
+        let currentCharIdx = 0;
+        let isDeleting = false;
+
+        function typeLoop() {
+            const line1 = rawLines[0] || '';
+            const line2 = rawLines[1] || '';
+
+            if (!isDeleting) {
+                if (currentLineIdx === 0) {
+                    if (currentCharIdx < line1.length) {
+                        currentCharIdx++;
+                        container.innerHTML = line1.substring(0, currentCharIdx);
+                        setTimeout(typeLoop, 65);
+                    } else {
+                        if (rawLines.length > 1) {
+                            currentLineIdx = 1;
+                            currentCharIdx = 0;
+                            container.innerHTML = line1 + '<br>';
+                            setTimeout(typeLoop, 200);
+                        } else {
+                            setTimeout(() => {
+                                isDeleting = true;
+                                typeLoop();
+                            }, 3500);
+                        }
+                    }
+                } else if (currentLineIdx === 1) {
+                    if (currentCharIdx < line2.length) {
+                        currentCharIdx++;
+                        container.innerHTML = line1 + '<br>' + line2.substring(0, currentCharIdx);
+                        setTimeout(typeLoop, 65);
+                    } else {
+                        setTimeout(() => {
+                            isDeleting = true;
+                            typeLoop();
+                        }, 3500);
+                    }
+                }
+            } else {
+                if (currentLineIdx === 1) {
+                    if (currentCharIdx > 0) {
+                        currentCharIdx--;
+                        container.innerHTML = line1 + '<br>' + line2.substring(0, currentCharIdx);
+                        setTimeout(typeLoop, 30);
+                    } else {
+                        currentLineIdx = 0;
+                        currentCharIdx = line1.length;
+                        container.innerHTML = line1;
+                        setTimeout(typeLoop, 30);
+                    }
+                } else if (currentLineIdx === 0) {
+                    if (currentCharIdx > 0) {
+                        currentCharIdx--;
+                        container.innerHTML = line1.substring(0, currentCharIdx);
+                        setTimeout(typeLoop, 30);
+                    } else {
+                        isDeleting = false;
+                        currentLineIdx = 0;
+                        currentCharIdx = 0;
+                        setTimeout(typeLoop, 400);
+                    }
+                }
+            }
+        }
+
+        typeLoop();
+    });
+}
+
+/* =========================================================
+   15. INITIALIZATION ON DOM READY
 ========================================================= */
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
@@ -2660,6 +2811,7 @@ if (document.readyState === "loading") {
         initPrivacyModal();
         initAiHomeTrigger();
         initTopHeroImageSlider();
+        initHeroTypewriterEffect();
         if (window.location.hash === "#admin") switchAuthTab("admin");
     });
 } else {
@@ -2668,5 +2820,6 @@ if (document.readyState === "loading") {
     initPrivacyModal();
     initAiHomeTrigger();
     initTopHeroImageSlider();
+    initHeroTypewriterEffect();
     if (window.location.hash === "#admin") switchAuthTab("admin");
 }
