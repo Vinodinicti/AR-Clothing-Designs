@@ -861,12 +861,14 @@ async function deleteLikedItem(id) {
 function openAddModal() {
     itemForm.reset();
     itemId.value = '';
+    const imageUrlInput = document.getElementById('itemImageUrlInput');
+    if (imageUrlInput) imageUrlInput.value = '';
     modalTitle.textContent = currentTab === 'items' ? 'Add Clothing Product' : 'Create New Order';
     itemModal.classList.add('active');
 }
 
 function openEditItemModal(id) {
-    const item = itemsData.find(i => i.id === id);
+    const item = itemsData.find(i => String(i.id) === String(id));
     if (!item) return;
 
     itemId.value = item.id;
@@ -876,6 +878,8 @@ function openEditItemModal(id) {
     itemStatusInput.value = item.status;
     itemTagInput.value = item.tag || '';
     itemDescInput.value = item.description || '';
+    const imageUrlInput = document.getElementById('itemImageUrlInput');
+    if (imageUrlInput) imageUrlInput.value = item.image || '';
 
     modalTitle.textContent = `Edit Product #${item.id}`;
     itemModal.classList.add('active');
@@ -889,6 +893,23 @@ async function handleFormSubmit(e) {
     e.preventDefault();
 
     const id = itemId.value;
+    const imageUrlInput = document.getElementById('itemImageUrlInput');
+    const imageUrl = imageUrlInput ? imageUrlInput.value.trim() : '';
+
+    let imageFile = null;
+    let base64Image = imageUrl || '';
+
+    if (itemImageFileInput.files.length > 0) {
+        imageFile = itemImageFileInput.files[0];
+        try {
+            base64Image = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (evt) => resolve(evt.target.result);
+                reader.readAsDataURL(imageFile);
+            });
+        } catch (e) {}
+    }
+
     const formData = new FormData();
     formData.append('title', itemTitleInput.value.trim());
     formData.append('category', itemCategoryInput.value);
@@ -897,9 +918,14 @@ async function handleFormSubmit(e) {
     formData.append('tag', itemTagInput.value.trim());
     formData.append('description', itemDescInput.value.trim());
 
-    if (itemImageFileInput.files.length > 0) {
-        formData.append('image', itemImageFileInput.files[0]);
+    if (imageFile) {
+        formData.append('image', imageFile);
+    } else if (imageUrl) {
+        formData.append('image', imageUrl);
     }
+
+    let saveSuccess = false;
+    let createdOrUpdatedItem = null;
 
     try {
         let res;
@@ -915,17 +941,48 @@ async function handleFormSubmit(e) {
             });
         }
 
-        const json = await res.json();
-        if (json.success) {
-            closeModal();
-            refreshDashboard();
-        } else {
-            alert(`Error: ${json.error}`);
+        if (res.ok) {
+            const json = await res.json();
+            if (json.success) {
+                saveSuccess = true;
+                createdOrUpdatedItem = json.data;
+            }
         }
     } catch (err) {
-        console.error('❌ Failed to save product:', err);
-        alert('Server error saving product');
+        console.warn('❌ API server unreachable or static deployment. Saving locally.', err);
     }
+
+    // Local Storage Sync Fallback for Frontend (designs.html & index.html)
+    let localItems = [];
+    try {
+        const localStr = localStorage.getItem('ar_custom_items');
+        if (localStr) localItems = JSON.parse(localStr);
+    } catch (e) {}
+
+    const newItemObj = createdOrUpdatedItem || {
+        id: id || Date.now(),
+        title: itemTitleInput.value.trim(),
+        category: itemCategoryInput.value,
+        price: parseFloat(itemPriceInput.value),
+        status: itemStatusInput.value,
+        tag: itemTagInput.value.trim(),
+        description: itemDescInput.value.trim(),
+        image: base64Image || 'images/designs/design-1.jpg',
+        created_at: new Date().toISOString()
+    };
+
+    if (id) {
+        localItems = localItems.map(item => String(item.id) === String(id) ? newItemObj : item);
+    } else {
+        localItems.unshift(newItemObj);
+    }
+
+    try {
+        localStorage.setItem('ar_custom_items', JSON.stringify(localItems));
+    } catch (e) {}
+
+    closeModal();
+    refreshDashboard();
 }
 
 async function deleteItem(id) {

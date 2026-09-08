@@ -93,48 +93,86 @@ function escapeHtml(str) {
 }
 
 async function fetchLiveProducts() {
+    let apiItems = [];
     try {
         const res = await fetch('/api/items');
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-            PRODUCTS_DATA.length = 0;
-            json.data.forEach(item => {
-                let parsedSizes = ["S", "M", "L", "XL"];
-                if (typeof item.sizes === 'string' && item.sizes.trim()) {
-                    parsedSizes = item.sizes.split(',').map(s => s.trim());
-                } else if (Array.isArray(item.sizes) && item.sizes.length > 0) {
-                    parsedSizes = item.sizes;
-                }
-
-                const catLower = (item.category || '').toLowerCase();
-                const isMen = catLower.includes('men') || catLower.includes('hoodie') || catLower.includes('shirt');
-
-                PRODUCTS_DATA.push({
-                    id: `design-${item.id}`,
-                    rawId: item.id,
-                    name: item.title,
-                    category: isMen ? 'men' : 'women',
-                    categoryLabel: item.category || 'Clothing',
-                    price: parseFloat(item.price),
-                    originalPrice: item.original_price ? parseFloat(item.original_price) : Math.round(parseFloat(item.price) * 1.25),
-                    image: item.image || 'images/designs/design-1.jpg',
-                    tag: item.tag || '',
-                    description: item.description || '',
-                    sizes: parsedSizes
-                });
-            });
-
-            renderDesignsPage();
-            renderProducts();
-            renderHomePageDesigns();
+        if (res.ok) {
+            const json = await res.json();
+            if (json.success && Array.isArray(json.data)) {
+                apiItems = json.data;
+            }
         }
     } catch (e) {
-        console.log('Using static catalog fallback', e);
-        renderDesignsPage();
-        renderProducts();
-        renderHomePageDesigns();
+        console.log('API server fetch info:', e);
     }
+
+    let localItems = [];
+    try {
+        const localStr = localStorage.getItem('ar_custom_items');
+        if (localStr) localItems = JSON.parse(localStr);
+    } catch (e) {}
+
+    const itemsMap = new Map();
+    
+    // Process API items
+    apiItems.forEach(item => {
+        if (item && item.id) {
+            itemsMap.set(String(item.id), item);
+        }
+    });
+
+    // Merge local items
+    localItems.forEach(item => {
+        if (item && item.id) {
+            itemsMap.set(String(item.id), {
+                ...itemsMap.get(String(item.id)),
+                ...item
+            });
+        }
+    });
+
+    const combinedItems = Array.from(itemsMap.values());
+
+    if (combinedItems.length > 0) {
+        PRODUCTS_DATA.length = 0;
+        combinedItems.forEach(item => {
+            let parsedSizes = ["S", "M", "L", "XL"];
+            if (typeof item.sizes === 'string' && item.sizes.trim()) {
+                parsedSizes = item.sizes.split(',').map(s => s.trim());
+            } else if (Array.isArray(item.sizes) && item.sizes.length > 0) {
+                parsedSizes = item.sizes;
+            }
+
+            const catLower = (item.category || '').toLowerCase();
+            const isMen = catLower.includes('men') || catLower.includes('hoodie') || catLower.includes('shirt') || catLower.includes('suit');
+            const isWomen = catLower.includes('women') || catLower.includes('gown') || catLower.includes('dress');
+
+            PRODUCTS_DATA.push({
+                id: `design-${item.id}`,
+                rawId: item.id,
+                name: item.title || item.name || 'Custom Design',
+                category: isMen ? 'men' : (isWomen ? 'women' : 'men'),
+                categoryLabel: item.category || 'Clothing',
+                price: parseFloat(item.price) || 2999,
+                originalPrice: item.original_price ? parseFloat(item.original_price) : Math.round((parseFloat(item.price) || 2999) * 1.25),
+                image: item.image || 'images/designs/design-1.jpg',
+                tag: item.tag || '',
+                description: item.description || '',
+                sizes: parsedSizes
+            });
+        });
+    }
+
+    renderDesignsPage();
+    renderProducts();
+    renderHomePageDesigns();
 }
+
+window.addEventListener('storage', (e) => {
+    if (e.key === 'ar_custom_items') {
+        fetchLiveProducts();
+    }
+});
 
 function renderHomePageDesigns() {
     const designGrid = document.querySelector(".design-grid");
