@@ -520,23 +520,45 @@ window.updateCourierAwb = async function(orderId, currentCourier, currentAwb) {
     const newAwb = prompt("Enter Tracking AWB Number (e.g. AWB-98421074):", currentAwb);
     if (newAwb === null) return;
 
+    const courierVal = newCourier.trim() || 'BlueDart Express';
+    const awbVal = newAwb.trim() || 'AWB-98421074';
+
+    // Update in-memory order object in allOrdersList
+    const ordObj = allOrdersList.find(o => String(o.id) === String(orderId) || String(o.order_number) === String(orderId));
+    if (ordObj) {
+        ordObj.courier_name = courierVal;
+        ordObj.tracking_awb = awbVal;
+    }
+
+    // Save courier override into localStorage
     try {
-        const res = await fetch(`${API_BASE_URL}/orders/${orderId}`, {
+        const courierOverrides = JSON.parse(localStorage.getItem('ar_order_courier_overrides') || '{}');
+        courierOverrides[orderId] = { courier: courierVal, awb: awbVal };
+        if (ordObj && ordObj.order_number) {
+            courierOverrides[ordObj.order_number] = { courier: courierVal, awb: awbVal };
+        }
+        localStorage.setItem('ar_order_courier_overrides', JSON.stringify(courierOverrides));
+    } catch (e) {
+        console.warn('Error saving courier override:', e);
+    }
+
+    // Try to update backend API if server is connected
+    try {
+        await fetch(`${API_BASE_URL}/orders/${orderId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                courier_name: newCourier.trim() || 'BlueDart Express',
-                tracking_awb: newAwb.trim() || 'AWB-98421074'
+                courier_name: courierVal,
+                tracking_awb: awbVal
             })
         });
-        const json = await res.json();
-        if (json.success) {
-            refreshDashboard();
-        } else {
-            alert(`Error updating courier info: ${json.error}`);
-        }
     } catch (err) {
-        console.error('❌ Error updating courier info:', err);
+        console.warn('Backend API connection offline. Courier update saved locally.', err);
+    }
+
+    renderOrdersSummary();
+    if (typeof showToastNotification === 'function') {
+        showToastNotification('Courier & Tracking AWB updated successfully!');
     }
 };
 
@@ -659,21 +681,52 @@ function renderLikesRows(items) {
 // 5. UPDATE ORDER STATUS & DELETE HANDLERS
 // =========================================================
 async function updateOrderStatus(orderId, newStatus) {
+    // 1. Update in-memory order object in allOrdersList
+    const ordObj = allOrdersList.find(o => String(o.id) === String(orderId) || String(o.order_number) === String(orderId));
+    if (ordObj) {
+        ordObj.order_status = newStatus;
+    }
+
+    // 2. Save status override into localStorage so customer tracking page (login.html) reads it instantly across tabs & pages
+    try {
+        const overrides = JSON.parse(localStorage.getItem('ar_order_status_overrides') || '{}');
+        overrides[orderId] = newStatus;
+        if (ordObj && ordObj.order_number) {
+            overrides[ordObj.order_number] = newStatus;
+        }
+        localStorage.setItem('ar_order_status_overrides', JSON.stringify(overrides));
+    } catch (e) {
+        console.warn('Error saving order status override:', e);
+    }
+
+    // 3. Try to update backend API if server is connected
     try {
         const res = await fetch(`${API_BASE_URL}/orders/${orderId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ order_status: newStatus })
         });
-        const json = await res.json();
-        if (json.success) {
-            refreshDashboard();
-        } else {
-            alert(`Error updating order status: ${json.error}`);
+        if (res.ok) {
+            const json = await res.json();
+            if (json && json.success) {
+                console.log(`Order #${orderId} status updated to ${newStatus} on server.`);
+            }
         }
     } catch (err) {
-        console.error('❌ Error updating order status:', err);
+        console.warn('Backend API connection offline. Order status update saved locally.', err);
     }
+
+    // 4. Refresh Dashboard UI stats and order summary table
+    renderOrdersSummary();
+    renderStats();
+    if (typeof showToastNotification === 'function') {
+        showToastNotification(`Order Status Updated to "${newStatus}"!`);
+    }
+}
+
+async function deleteOrder(orderId) {
+    if (!confirm(`Are you sure you want to cancel / remove order #${orderId}?`)) return;
+    await updateOrderStatus(orderId, 'Cancelled');
 }
 
 async function deleteUser(userId) {

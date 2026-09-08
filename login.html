@@ -1154,7 +1154,42 @@
                 ];
             }
 
+            // Merge localStorage overrides if present (e.g. status/courier edits made in admin dashboard)
+            try {
+                const statusOverrides = JSON.parse(localStorage.getItem('ar_order_status_overrides') || '{}');
+                const courierOverrides = JSON.parse(localStorage.getItem('ar_order_courier_overrides') || '{}');
+                orders = orders.map(ord => {
+                    const idKey = String(ord.id);
+                    const orderNumKey = ord.order_number;
+                    let newStatus = ord.order_status || ord.status || 'Pending';
+                    if (statusOverrides[idKey]) newStatus = statusOverrides[idKey];
+                    else if (orderNumKey && statusOverrides[orderNumKey]) newStatus = statusOverrides[orderNumKey];
+
+                    let newCourier = ord.courier_name || 'BlueDart Express';
+                    let newAwb = ord.tracking_awb || 'AWB-98421074';
+                    if (courierOverrides[idKey]) {
+                        if (courierOverrides[idKey].courier) newCourier = courierOverrides[idKey].courier;
+                        if (courierOverrides[idKey].awb) newAwb = courierOverrides[idKey].awb;
+                    } else if (orderNumKey && courierOverrides[orderNumKey]) {
+                        if (courierOverrides[orderNumKey].courier) newCourier = courierOverrides[orderNumKey].courier;
+                        if (courierOverrides[orderNumKey].awb) newAwb = courierOverrides[orderNumKey].awb;
+                    }
+
+                    return {
+                        ...ord,
+                        order_status: newStatus,
+                        status: newStatus,
+                        courier_name: newCourier,
+                        tracking_awb: newAwb
+                    };
+                });
+            } catch (err) {
+                console.warn('Error applying localStorage order overrides:', err);
+            }
+
             userOrdersList = orders;
+
+            const currentSelectedVal = selectEl.value;
 
             // Populate dropdown with exact order ref numbers
             selectEl.innerHTML = userOrdersList.map(ord => {
@@ -1165,9 +1200,23 @@
                 return `<option value="${ord.id}">Order #${num}${itemStr} - ₹${Number(price).toLocaleString('en-IN')} [${status}]</option>`;
             }).join('');
 
-            // Select first order by default
-            renderOrderTrackingStepper(userOrdersList[0]);
+            // Restore previous selection if still available, else default to first
+            if (currentSelectedVal && userOrdersList.some(o => String(o.id) === String(currentSelectedVal))) {
+                selectEl.value = currentSelectedVal;
+                loadSelectedOrderTracking();
+            } else if (userOrdersList.length > 0) {
+                renderOrderTrackingStepper(userOrdersList[0]);
+            }
         }
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'ar_order_status_overrides' || e.key === 'ar_order_courier_overrides') {
+                fetchAndRenderUserOrders();
+            }
+        });
+        window.addEventListener('orderStatusUpdated', () => {
+            fetchAndRenderUserOrders();
+        });
 
         function loadSelectedOrderTracking() {
             const selectEl = document.getElementById('user-order-select');
