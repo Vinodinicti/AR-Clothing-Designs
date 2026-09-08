@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR CLOTHING & DESIGNS - Executive Dashboard</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- HEADER CARD WITH ADMIN USER INFO & LOGOUT -->
+        <header class="header-card">
+            <div class="brand-wrapper">
+                <img src="ar-logo.png" alt="AR Clothing & Designs Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='logo.png';">
+                <div class="brand-info">
+                    <h1>AR CLOTHING <span class="gold-text">&amp; DESIGNS</span></h1>
+                    <p>Executive Product Catalog &amp; User Summary Dashboard</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="user-badge" id="adminUserBadge" style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #FFFFFF; font-size: 14px;">
+                    <i class="fa-solid fa-user-gear" style="color: var(--gold-bright);"></i> <span id="adminNameDisplay">AR Admin</span>
+                </div>
+                <button class="btn-primary" id="openAddModalBtn">
+                    <i class="fa-solid fa-plus"></i> <span id="addBtnText">Add Clothing Product</span>
+                </button>
+                <button class="btn-secondary logout-header-btn" id="logoutBtn" title="Logout Admin">
+                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                </button>
+            </div>
+        </header>
+
+        <!-- NAVIGATION TABS -->
+        <nav class="nav-tabs-wrapper">
+            <button class="tab-btn active" data-tab="items" id="tabItems">
+                <i class="fa-solid fa-shirt"></i> Clothing Catalog
+            </button>
+            <button class="tab-btn" data-tab="orders" id="tabOrders">
+                <i class="fa-solid fa-receipt"></i> Order Summary
+            </button>
+            <button class="tab-btn" data-tab="users" id="tabUsers">
+                <i class="fa-solid fa-users"></i> Users Summary
+            </button>
+            <button class="tab-btn" data-tab="cart" id="tabCart">
+                <i class="fa-solid fa-chart-pie"></i> Product Summary
+            </button>
+        </nav>
+
+        <!-- STATS METRICS GRID -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div>
+                    <div class="stat-label">CATALOG PRODUCTS</div>
+                    <div class="stat-value" id="totalItemsCount">6</div>
+                </div>
+                <div class="stat-icon-box icon-navy">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div>
+                    <div class="stat-label">REGISTERED USERS</div>
+                    <div class="stat-value" id="activeItemsCount">5</div>
+                </div>
+                <div class="stat-icon-box icon-green">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div>
+                    <div class="stat-label">CATALOG VALUE (INR)</div>
+                    <div class="stat-value navy" id="totalInventoryValue">₹0.00</div>
+                </div>
+                <div class="stat-icon-box icon-cyan">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div>
+                    <div class="stat-label">ORDERS REVENUE (INR)</div>
+                    <div class="stat-value navy" id="totalOrdersRevenue">₹0.00</div>
+                </div>
+                <div class="stat-icon-box icon-amber">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILTER & SEARCH BAR -->
+        <section class="filter-card">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search clothing products by title or description...">
+            </div>
+            
+            <div class="filter-group">
+                <span class="filter-label">Category / Role:</span>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="Men's Formal">Men's Formal</option>
+                    <option value="Hoodies & Sweats">Hoodies &amp; Sweats</option>
+                    <option value="Women's Casual">Women's Casual</option>
+                    <option value="Women's Dresses">Women's Dresses</option>
+                    <option value="Women's Evening">Women's Evening</option>
+                    <option value="Men's Shirts">Men's Shirts</option>
+                </select>
+
+                <span class="filter-label">Status:</span>
+                <select class="filter-select" id="statusFilter">
+                    <option value="all">All Statuses</option>
+                    <option value="In Stock">In Stock / Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Packed">Packed</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Nearest Hub">Nearest Hub</option>
+                    <option value="Out for Delivery">Out for Delivery</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+
+                <button class="btn-icon" id="refreshBtn" title="Refresh Data">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- MAIN DATA TABLE CARD -->
+        <main class="table-card" id="mainTableCard">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr id="tableHeadRow">
+                            <th>ID</th>
+                            <th>PRODUCT</th>
+                            <th>CATEGORY</th>
+                            <th>PRICE (INR)</th>
+                            <th>STATUS</th>
+                            <th>DESCRIPTION</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Dynamic Rows loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- ITEM MODAL DIALOG -->
+    <div class="modal-overlay" id="itemModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Clothing Product</h2>
+                <button class="close-modal-btn" id="closeItemModalBtn">&times;</button>
+            </div>
+            <form id="itemForm" enctype="multipart/form-data">
+                <input type="hidden" id="itemId">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="itemTitleInput">Product Name *</label>
+                        <input type="text" id="itemTitleInput" required placeholder="e.g. Noir Executive Suit">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="itemImageFileInput"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Product Image File</label>
+                        <input type="file" id="itemImageFileInput" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="itemCategoryInput">Category *</label>
+                        <select id="itemCategoryInput" required>
+                            <option value="Men's Formal">Men's Formal</option>
+                            <option value="Hoodies & Sweats">Hoodies &amp; Sweats</option>
+                            <option value="Women's Casual">Women's Casual</option>
+                            <option value="Women's Dresses">Women's Dresses</option>
+                            <option value="Women's Evening">Women's Evening</option>
+                            <option value="Men's Shirts">Men's Shirts</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemPriceInput">Price (₹ INR) *</label>
+                        <input type="number" step="1" id="itemPriceInput" required placeholder="3499">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemStatusInput">Status *</label>
+                        <select id="itemStatusInput" required>
+                            <option value="In Stock">In Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemTagInput">Tag Badge</label>
+                        <input type="text" id="itemTagInput" placeholder="BESTSELLER / TRENDING / POPULAR">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="itemDescInput">Description</label>
+                        <textarea id="itemDescInput" rows="3" placeholder="Tailored navy wool-blend suit featuring structured shoulders..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelItemModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary" id="saveItemBtn">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FULL IMAGE PREVIEW LIGHTBOX MODAL -->
+    <div class="modal-overlay" id="imagePreviewModal" style="z-index: 2000;">
+        <div class="image-preview-card">
+            <button class="close-modal-btn close-preview-btn" id="closeImagePreviewBtn" title="Close Preview">&times;</button>
+            <img src="" alt="Product Catalog Full View" id="previewModalImg" class="preview-img">
+            <div class="preview-caption" id="previewModalCaption">Product Catalog Image</div>
+        </div>
+    </div>
+
+    <!-- JavaScript Controller -->
+    <script src="dashboard.js"></script>
+</body>
+</html>
